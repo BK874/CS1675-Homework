@@ -1,0 +1,11 @@
+1. [Proposed ML problem 1]: Book suggestions?
+   Features (x):
+   Labels (y):
+   Data collection:
+   Challenges:
+
+2. [Proposed ML problem 2]: Pathing for an autonomous robot
+   Features (x):
+   Labels (y):
+   Data collection:
+   Challenges:
