@@ -1,11 +1,25 @@
-1. [Proposed ML problem 1]: Book suggestions?
-   Features (x):
-   Labels (y):
-   Data collection:
-   Challenges:
+1. [Proposed ML problem 1]: Determining the reading level of books and/or documents.
+For example, the Very Hungry Caterpillar might be considered a Kindergarten-level book,
+while Harry Potter and the Goblet of Fire may be considered a Fourth or Fifth grade-level book.
+   Features (x): average syllable count, length of text, average sentence length
+   Labels (y): Grade levels such as: Kindergarten, 1-12, Undergrad, Grad, etc.
+   Data collection: I would collect data by examining required/suggested reading lists from a variety of academic institutions and libaries,
+   as well as by polling a random sampling of readers. The texts themselves would be run through a natural language processesing algorithmn.
+   Challenges: Syllable count does not necessarily indicate complexity (a first grader's essay on a hippopotomas),
+   neither does length of text (Heart of Darkness by Joseph Conrad is less than 100 pages but the shortest Harry
+   Potter book is over 200 pages long). Additionally, some books can be read and analyzed at multiple reading levels;
+   Lewis Carroll's Alice's Adventures in Wonderland, for example, is a popular fantasy children's tale, but can also
+   be examined from a literary perspective for its narrative structure, from a mathematical perspective for its
+   many allusions to advanced (post-high school) mathematical concepts, and through a myriad of other disciplinary
+   lenses.
 
-2. [Proposed ML problem 2]: Pathing for an autonomous robot
-   Features (x):
-   Labels (y):
-   Data collection:
-   Challenges:
+2. [Proposed ML problem 2]: Sports results prediction
+For example, determining the likely hood that the Steelers will win the Super Bowl
+   Features (x): Performance records for teams, as well as for individual players
+   Labels (y): Player/team ranking, likely outcomes of specific team matchups, etc.
+   Data collection: Processing the wide variety of sports-related statistics and analysis publically available
+   Challenges: There are a wide variety of variables that determine the outcome of every game - historical data
+   is important, yes, but some players get better over time, while others decline in skill with age. Some players
+   have better chemistry with some teams than with others. Weather and the location (home vs away) of the game
+   can also factor into the outcome of the game. Addtionally, the players are ultimately human, and, like all of
+   us, have good and bad days. 
