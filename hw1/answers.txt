@@ -1,3 +1,7 @@
+% Brian Knotten
+% CS 1675
+% Homework 1
+
 1. [Proposed ML problem 1]: Determining the reading level of books and/or documents.
 For example, the Very Hungry Caterpillar might be considered a Kindergarten-level book,
 while Harry Potter and the Goblet of Fire may be considered a Fourth or Fifth grade-level book.

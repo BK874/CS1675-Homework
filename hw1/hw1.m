@@ -1,3 +1,7 @@
+% Brian Knotten
+% CS 1675
+% Homework 1
+
 % 1. Generate 1 1000000x1 (one (one million by one) vector of random numbers
 % from a Gaussian (normal) distribution with mean of 0 and standard deviation
 % of 5. Use Matlab's randn function.

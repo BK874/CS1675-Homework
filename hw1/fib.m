@@ -1,3 +1,7 @@
+% Brian Knotten
+% CS 1675
+% Homework 1
+
 % 11. Create a function function [val] = fib(n) that returns the
 % n-th number (n >= 1) in the Fibonacci sequence 1, 1, 2, 3, 5, 8, 13...
 

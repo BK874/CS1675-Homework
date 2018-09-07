@@ -1,3 +1,7 @@
+% Brian Knotten
+% CS 1675
+% Homework 1
+
 % 10. Write a function function [B] = normalize_rows(A) which uses a
 % single command (one line and no loops) to make the sum in each row
 % of the matrix 1. You may need to use repmat, depending on your
