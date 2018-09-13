@@ -14,9 +14,10 @@
 function [ids, means, ssd] = restarts(A, k, iters, R)
     ssd = realmax;
     for r = 1:R
-        [ids, means, ssd2] = my_kmeans(A, k, iters);
-        ssd2
+        [ids2, means2, ssd2] = my_kmeans(A, k, iters);
         if ssd2<ssd
+            ids = ids2;
+            means = means2;
             ssd = ssd2;
         end
     end
