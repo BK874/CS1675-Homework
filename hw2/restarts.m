@@ -12,4 +12,12 @@
 % points and their assigned means summer over all clusters)
 
 function [ids, means, ssd] = restarts(A, k, iters, R)
+    ssd = realmax;
+    for r = 1:R
+        [ids, means, ssd2] = my_kmeans(A, k, iters);
+        ssd2
+        if ssd2<ssd
+            ssd = ssd2;
+        end
+    end
     
