@@ -27,31 +27,40 @@ function [ids, means, ssd] = my_kmeans(A, k, iters)
         end
     end
 
-    % Compute membership for each data sample by comparing the distance between
-    % each sample (row of A) and each cluster center (row of means) and assigning
-    % each sample to the nearest center
-    ids = zeros(size(A, 1), 1);
-    for i = 1:size(A, 1)
-        dist = zeros(1, k);
-        for j = 1:k
-            dist(j) = pdist2(A(i, :), means(j, :));
+    % Loop below steps the inputted number of times
+    for iter = 1:iters
+        % Compute membership for each data sample by comparing the distance between
+        % each sample (row of A) and each cluster center (row of means) and assigning
+        % each sample to the nearest center
+        ids = zeros(size(A, 1), 1);
+        for i = 1:size(A, 1)
+            dist = zeros(1, k);
+            for j = 1:k
+                dist(j) = pdist2(A(i, :), means(j, :));
+            end
+            [m, I] = min(dist);
+            ids(i) = I;
         end
-        [m, I] = min(dist);
-        ids(i) = I;
-    end
 
-    % Recompute cluster means by taking the average across samples assigned to that cluster for each feature dimension
-    for avg = 1:size(means, 1) %For each cluster center
-        toBeAvg = zeros(1, size(A, 2));
-        for id = 1:size(ids, 1) %For each id in in the id vector, 
-            if ids(id) == avg        %If the current id matches that of the current center
-                if sum(toBeAvg) == 0 %Add that sample to those that need to be averaged
-                    toBeAvg(1, :)) = A(id, :);
-                else
-                    toBeAvg = [toBeAvg; A(id, :)];
+        % Recompute cluster means by taking the average across samples assigned to that cluster for each feature dimension
+        for avg = 1:size(means, 1) %For each cluster center
+            toBeAvg = zeros(1, size(A, 2));
+            for id = 1:size(ids, 1) %For each id in in the id vector, 
+                if ids(id) == avg   %If the current id matches that of the current center
+                    if sum(toBeAvg) == 0 %Add that sample to those that need to be avged
+                        toBeAvg(1, :) = A(id, :);
+                    else
+                        toBeAvg = [toBeAvg; A(id, :)];
+                    end
                 end
             end
+            means(avg, :) = mean(toBeAvg); %Recalculate the center to be the average of 
+        end                                %the assigned samples
+
+        % Compute overall SSD error - the sum of squared distances between
+        % points and their assigned means, summed over all clusters
+        ssd = 0;
+        for d = 1:size(means, 1)
+            ssd = ssd + sum(pdist2(means(d, :), A(ids == d, :)));
         end
-        means(avg, :) = mean(toBeAvg);
     end
-    
