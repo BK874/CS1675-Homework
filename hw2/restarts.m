@@ -21,4 +21,3 @@ function [ids, means, ssd] = restarts(A, k, iters, R)
             ssd = ssd2;
         end
     end
-    

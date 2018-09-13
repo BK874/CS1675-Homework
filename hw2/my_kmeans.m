@@ -54,7 +54,9 @@ function [ids, means, ssd] = my_kmeans(A, k, iters)
                     end
                 end
             end
-            means(avg, :) = mean(toBeAvg); %Recalculate the center to be the average of 
+            if sum(toBeAvg) ~= 0
+                means(avg, :) = mean(toBeAvg); %Recalculate the center to be the average of
+            end
         end                                %the assigned samples
 
         % Compute overall SSD error - the sum of squared distances between
