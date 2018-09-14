@@ -19,15 +19,44 @@ imBirdD = imresize(imBirdD, [100 100]);
 % Convert 3D matrix to 2D matrix
 H = 100;
 W = 100;
-imPandaD = reshape(imPandaD, H*W, 3);
-imPittD = reshape(imPittD, H*W, 3);
-imBirdD = reshape(imBirdD, H*W, 3);
+imPandaR = reshape(imPandaD, H*W, 3);
+imPittR = reshape(imPittD, H*W, 3);
+imBirdR = reshape(imBirdD, H*W, 3);
 
 % Use restarts.m to perform clustering over the images
-[pandaIds, pandaMeans, pandaSsd] = restarts(imPandaD, 5, 10, 5);
-[pittIds, pittMeans, pittSsd] = restarts(imPittD, 5, 10, 5);
-[birdIds, birdMeans, birdSsd] = restarts(imBirdD, 5, 10, 5);
+[pandaIds, pandaMeans, pandaSsd] = restarts(imPandaR, 10, 5, 3);
+[pittIds, pittMeans, pittSsd] = restarts(imPittR, 10, 5, 3);
+[birdIds, birdMeans, birdSsd] = restarts(imBirdR, 10, 5, 3);
 
 % Recolor the pixels of each image according to cluster memberships i.e. replace
 % each pixel with the average R, G, B values of the cluster to which the pixel
-% belongs. 
+% belongs.
+
+count = 1;
+for h = 1:100
+    for w = 1:100
+        imPandaD(h, w, :) = pandaMeans(pandaIds(count), :);
+    end
+end
+
+for h = 1:100
+    for w = 1:100
+        imPittD(h, w, :) = pittMeans(pittIds(count), :);
+    end
+end
+
+for h = 1:100
+    for w = 1:100
+        imbirdD(h, w, :) = birdMeans(birdIds(count), :);
+    end
+end
+
+imPandaU = im2uint8(imPandaD);
+imPittU = im2uint8(imPittD);
+imBirdU = im2uint8(imBirdD);
+figure;
+imshow(imPandaU);
+figure;
+imshow(imPittU);
+figure;
+imshow(imBirdU);
