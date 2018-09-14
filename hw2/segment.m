@@ -24,8 +24,8 @@ imPittR = reshape(imPittD, H*W, 3);
 imBirdR = reshape(imBirdD, H*W, 3);
 
 % Use restarts.m to perform clustering over the images
-[pandaIds, pandaMeans, pandaSsd] = restarts(imPandaR, 10, 5, 3);
-[pittIds, pittMeans, pittSsd] = restarts(imPittR, 10, 5, 3);
+[pandaIds, pandaMeans, pandaSsd] = restarts(imPandaR, 5, 5, 3);
+[pittIds, pittMeans, pittSsd] = restarts(imPittR, 5, 5, 3);
 [birdIds, birdMeans, birdSsd] = restarts(imBirdR, 10, 5, 3);
 
 % Recolor the pixels of each image according to cluster memberships i.e. replace
@@ -35,19 +35,24 @@ imBirdR = reshape(imBirdD, H*W, 3);
 count = 1;
 for h = 1:100
     for w = 1:100
-        imPandaD(h, w, :) = pandaMeans(pandaIds(count), :);
+        imPandaD(w, h, :) = pandaMeans(pandaIds(count), :);
+        count = count + 1;
     end
 end
 
+count = 1;
 for h = 1:100
     for w = 1:100
-        imPittD(h, w, :) = pittMeans(pittIds(count), :);
+        imPittD(w, h, :) = pittMeans(pittIds(count), :);
+        count = count + 1;
     end
 end
 
+count = 1;
 for h = 1:100
     for w = 1:100
-        imbirdD(h, w, :) = birdMeans(birdIds(count), :);
+        imBirdD(w, h, :) = birdMeans(birdIds(count), :);
+        count = count + 1;
     end
 end
 
