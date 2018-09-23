@@ -7,8 +7,10 @@
 % should correspond to the i-th row in X_train.
 % w = Dx1 vector of weights (one per feature dimension).
 
-[w] = lr_solve_closed(X_train, y_train)
+function [w] = lr_solve_closed(X_train, y_train)
 
 % Compute the closed-form least-squares solution to linear regression
 % using the MOore-Penrose inverse, as derived in class.
 % Use pinv and one line of code
+
+w = pinv(X_train) * y_train

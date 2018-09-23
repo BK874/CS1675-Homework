@@ -7,7 +7,9 @@
 % w = Dx1 vector of weights
 % y_pred = predicted Mx1 vector of labels for the test set.
 
-[y_pred] = lr_predict(X_test, w)
+function [y_pred] = lr_predict(X_test, w)
 
 % Use the weights computed in lr_solve_closed to predict a label
 % for a new test sample.
+
+    y_pred = w' * X_test'
