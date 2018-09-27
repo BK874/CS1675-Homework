@@ -24,11 +24,15 @@ grad = zeros(sizeX(2), 1);
 % In each iteration, compute the loss function gradient using all training data points
 % You'll need to use lr_predict.m
 
+%For each iteration
 for it = 1:iters
   y_pred = lr_predict(X_train, w);
+  %For each feature dimension
   for k = 1:sizeX(2)
     samp_sum = 0;
+    %For each sample
     for i = 1:sizeX(1)
+      %Compute the gradient
       samp_sum = samp_sum + (y_train(i) - y_pred(i)) * -X_train(i, k);
     end
     grad(k) = (2/sizeX(1)) * samp_sum;
