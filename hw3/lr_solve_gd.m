@@ -17,17 +17,23 @@ function [w] = lr_solve_gd(X_train, y_train, iters, eta)
 % Initialize the weights using random values or all zeros
 
 sizeX = size(X_train);
-w = zeros(1, sizeX(2));
+w = zeros(sizeX(2), 1);
+grad = zeros(sizeX(2), 1);
 
 % Repeat the following iters times:
 % In each iteration, compute the loss function gradient using all training data points
 % You'll need to use lr_predict.m
 
-diffY = 0;
-				% For each iteration
-diffY = y_train - sum(lr_predict(X_train, w));
-w = w + y_train * X_train * eta;
-
-
-
+for it = 1:iters
+  y_pred = lr_predict(X_train, w);
+  for k = 1:sizeX(2)
+    samp_sum = 0;
+    for i = 1:sizeX(1)
+      samp_sum = samp_sum + (y_train(i) - y_pred(i)) * X_train(i, k);
+    end
+    grad(k) = (2/sizeX(1)) * samp_sum;
+  end
+end
+  
 % Adjust the weights in the opposite to the gradient
+w = w - eta * w_new;

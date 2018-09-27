@@ -12,4 +12,4 @@ function [y_pred] = lr_predict(X_test, w)
 % Use the weights computed in lr_solve_closed to predict a label
 % for a new test sample.
 
-    y_pred = w' * X_test'
+  y_pred = X_test * w;
