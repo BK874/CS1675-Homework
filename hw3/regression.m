@@ -58,7 +58,7 @@ for ex = -6:-1
   gradSol = lr_predict(bStdTestSet, w);
 
   L2_Grad = norm(gradSol - testLabels);
-  fprintf('L2 distance between predicted values with a step size of 10.^(%d) and the ground-truth test labels: %f\n', ex, L2_Grad)
+  fprintf('L2 error using gradient descent with learning rate of 10.^(%d): %f\n', ex, L2_Grad)
 end
 
 
