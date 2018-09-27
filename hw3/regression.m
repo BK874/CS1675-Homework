@@ -46,17 +46,20 @@ bStdTestSet = [ones(size(stdTestSet, 1), 1) stdTestSet];
 w = lr_solve_closed(bStdTrainSet, trainLabels);
 y_pred = lr_predict(bStdTestSet, w);
 L2 = norm(y_pred-testLabels);
-fprintf('L2 error: %f\n', L2);
+fprintf('L2 error of closed form solution: %f\n', L2);
 % Now compute and evaluate the gradient descent solution. Use 50 iterations,
 % and experiment with the following values for the learning rate: 10.^(-6:-1).
 % Evaluate the L2 distance between predicted and ground-truth test labels as above.
 % Print the errors for each learning rate and include them in your report.
 
-w = lr_solve_gd(bStdTrainSet, trainLabels, 50, 10.^(-6));
-gradSol = lr_predict(bStdTestSet, w);
 
-L2_Grad = norm(gradSol - testLabels)
+for ex = -6:-1
+  w = lr_solve_gd(bStdTrainSet, trainLabels, 50, 10.^(ex));
+  gradSol = lr_predict(bStdTestSet, w);
 
+  L2_Grad = norm(gradSol - testLabels);
+  fprintf('L2 distance between predicted values with a step size of 10.^(%d) and the ground-truth test labels: %f\n', ex, L2_Grad)
+end
 
 
 
