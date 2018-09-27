@@ -29,11 +29,13 @@ for it = 1:iters
   for k = 1:sizeX(2)
     samp_sum = 0;
     for i = 1:sizeX(1)
-      samp_sum = samp_sum + (y_train(i) - y_pred(i)) * X_train(i, k);
+      samp_sum = samp_sum + (y_train(i) - y_pred(i)) * -X_train(i, k);
     end
     grad(k) = (2/sizeX(1)) * samp_sum;
   end
+  % Adjust the weights in the opposite to the gradient
+  w = w - (eta * grad);
 end
   
-% Adjust the weights in the opposite to the gradient
-w = w - eta * w_new;
+
+
