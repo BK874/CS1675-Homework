@@ -26,3 +26,6 @@ octave-workspace
 
 # Compressed submission files
 *.zip
+
+# Submission folders
+Brian_Knotten/
