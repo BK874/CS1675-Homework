@@ -8,7 +8,7 @@
 % K = scalar
 % y_test = Mx1 predicted label vector for the test instances
 
-function [y_test] = my_knn.m(X_train, y_train, X_test, K)
+function [y_test] = my_knn(X_train, y_train, X_test, K)
 
 % For each test instance, compute its distance to all training instances,
 % pick the closest K training instances, pick the most common among their labels,

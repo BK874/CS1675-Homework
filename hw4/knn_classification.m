@@ -10,14 +10,14 @@
 % (768/10 = 76 remainder 8)
 
 data = dlmread('pima.data', ',');
-dataSize = size(diabetesData);
+dataSize = size(data);
 
 %Define labels and data sans label
 labels = data(1:end-8, end);
 data = data(1:end-8, 1:end-1);
 
 %Divide data and labels into folds: 
-foldLabels = reshape(labels, [76, 10]) %ith column corresponds to ith fold
+foldLabels = reshape(labels, [76, 10]); %ith column corresponds to ith fold
 fold1 = data(1:76, :);
 fold2 = data(77:152, :);
 fold3 = data(153:228, :);
@@ -27,7 +27,7 @@ fold6 = data(381:456, :);
 fold7 = data(457:532, :);
 fold8 = data(533:608, :);
 fold9 = data(609:684, :);
-fold10 = data(689:760, :);
+fold10 = data(685:760, :);
 
 %create multi-dim array for ease of access
 folds = fold1;
@@ -41,15 +41,63 @@ folds = cat(3, folds, fold8);
 folds = cat(3, folds, fold9);
 folds = cat(3, folds, fold10);
 
-for f = 1:10
-  
+%For the specified K values
+%for K = 3
+ for K = 1:2:15
+  ratios = zeros(10, 1);
+  %For every split of the data, standardize and apply KNN
+  for f = 1:10
+    if f ~= 1
+      trainData = folds(:, :, 1);
+      trainLabels = foldLabels(:, 1);
+      for g = setdiff(2:10, f)
+	trainData = cat(1, trainData, folds(:, :, g));
+	trainLabels = cat(1, trainLabels, foldLabels(:, g));
+      end
+      %Standardize
+      trainDataMean = mean(trainData);
+      trainDataStd = std(trainData);
+      stdTrainData = (trainData - trainDataMean)./trainDataStd;
+      %Apply KNN
+      splitLabels = my_knn(stdTrainData, trainLabels, folds(:, :, f), K);
+      %Compare the predicted labels and the ground truth labels
+      numLabels = size(splitLabels);
+      count = 0;
+      for m = 1:numLabels(1)
+	if splitLabels(m) == foldLabels(m, f)
+	  count = count + 1;
+	end
+      end
+      ratios(f) = count/numLabels(1);
+    else %Edge Case split on 1 - - - - - - - - - - - - - - - - - - - - - -
+      trainData = folds(:, :, 2);
+      trainLabels = foldLabels(:, 2);
+      for h = 3:10
+	trainData = cat(1, trainData, folds(:, :, h));
+	trainLabels = cat(1, trainLabels, folds(:, h));
+      end
+      %Standardize
+      trainDataMean = mean(trainData);
+      trainDataStd = std(trainData);
+      stdTrainData = (trainData - trainDataMean)./trainDataStd;
+      %Apply KNN
+      splitLabels = my_knn(stdTrainData, trainLabels, folds(:, :, f), K);
+      %Compare the predicted labels and the ground truth labels
+      numLabels = size(splitLabels);
+      count = 0;
+      for m = 1:numLabels(1)
+	if splitLabels(m) == foldLabels(m, f)
+	  count = count + 1;
+	end
+      end
+      ratios(f) = count/numLabels(1);
+    end
+  end
+  avgPerform = mean(ratios);
+end
 
-## %Standardize
-## stdFolds = folds;
-## for f = 1:10
-##   foldMean = mean(stdFolds(:, :, f));
-##   foldStd = std(stdFolds(:, :, f));
-##   stdFolds(:, :, f) = (stdFolds(:, :, f) - foldMean)./foldStd;
-## end
+%Plot results
+
+% Experiment with 3 different values of the bandwidth parameter σ
 
 
