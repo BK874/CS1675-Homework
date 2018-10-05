@@ -31,7 +31,7 @@ function [y_test] = weighted_knn(X_train, y_train, X_test, sigma)
 %label's weighted distances
   testSize = size(X_test);
   trainSize = size(X_train);
-  y_test = zeros(testSize(1));
+  y_test = zeros(testSize(1),1);
   %For each test instance, for each training instance, if that sample's label is x, then add that instance's weighted distance to the xSum 
   uni = unique(y_train);
   numUni = size(uni);
@@ -40,7 +40,7 @@ function [y_test] = weighted_knn(X_train, y_train, X_test, sigma)
     for inst = 1:trainSize(1)
       for lab = 1:numUni(1)
 	if y_train(inst) == uni(lab)
-	  labelSums(lab) = labelSums(lab) + wDist(inst, r);
+	  labelSums(lab) = labelSums(lab) + wDists(inst, r);
 	end
       end
     end

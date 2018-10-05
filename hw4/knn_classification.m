@@ -42,9 +42,11 @@ folds = cat(3, folds, fold9);
 folds = cat(3, folds, fold10);
 
 %For the specified K values
-%for K = 3
- for K = 1:2:15
+knnResults = zeros(8, 1);
+index = 1;
+for K = 1:2:15
   ratios = zeros(10, 1);
+  wRatios = zeros(10, 3);
   %For every split of the data, standardize and apply KNN
   for f = 1:10
     if f ~= 1
@@ -54,21 +56,6 @@ folds = cat(3, folds, fold10);
 	trainData = cat(1, trainData, folds(:, :, g));
 	trainLabels = cat(1, trainLabels, foldLabels(:, g));
       end
-      %Standardize
-      trainDataMean = mean(trainData);
-      trainDataStd = std(trainData);
-      stdTrainData = (trainData - trainDataMean)./trainDataStd;
-      %Apply KNN
-      splitLabels = my_knn(stdTrainData, trainLabels, folds(:, :, f), K);
-      %Compare the predicted labels and the ground truth labels
-      numLabels = size(splitLabels);
-      count = 0;
-      for m = 1:numLabels(1)
-	if splitLabels(m) == foldLabels(m, f)
-	  count = count + 1;
-	end
-      end
-      ratios(f) = count/numLabels(1);
     else %Edge Case split on 1 - - - - - - - - - - - - - - - - - - - - - -
       trainData = folds(:, :, 2);
       trainLabels = foldLabels(:, 2);
@@ -76,28 +63,53 @@ folds = cat(3, folds, fold10);
 	trainData = cat(1, trainData, folds(:, :, h));
 	trainLabels = cat(1, trainLabels, folds(:, h));
       end
-      %Standardize
-      trainDataMean = mean(trainData);
-      trainDataStd = std(trainData);
-      stdTrainData = (trainData - trainDataMean)./trainDataStd;
-      %Apply KNN
-      splitLabels = my_knn(stdTrainData, trainLabels, folds(:, :, f), K);
-      %Compare the predicted labels and the ground truth labels
-      numLabels = size(splitLabels);
-      count = 0;
-      for m = 1:numLabels(1)
-	if splitLabels(m) == foldLabels(m, f)
-	  count = count + 1;
-	end
-      end
-      ratios(f) = count/numLabels(1);
     end
+    %Standardize
+    trainDataMean = mean(trainData);
+    trainDataStd = std(trainData);
+    stdTrainData = (trainData - trainDataMean)./trainDataStd;
+    %Apply KNN
+    splitLabels = my_knn(stdTrainData, trainLabels, folds(:, :, f), K);
+    numLabels = size(splitLabels);
+    weightedLabels = zeros(numLabels(1), 3);
+    weightedLabels(:, 1) = weighted_knn(stdTrainData, trainLabels, folds(:, :, f), 10);
+    weightedLabels(:, 2) = weighted_knn(stdTrainData, trainLabels, folds(:, :, f), 5);
+    weightedLabels(:, 3) = weighted_knn(stdTrainData, trainLabels, folds(:, :, f), 1);
+    %Compare the predicted labels and the ground truth labels
+    count = 0;
+    for m = 1:numLabels(1)
+      if splitLabels(m) == foldLabels(m, f)
+	count = count + 1;
+      end
+      for w = 1:3
+	wCount = 0;
+	if weightedLabels(m, w) == foldLabels(m, f)
+	  wCount = wCount + 1;
+	end
+	wRatios(f, w) = wCount/numLabels(1);
+      end
+    end
+    ratios(f) = count/numLabels(1);
   end
   avgPerform = mean(ratios);
+  wAvgPerform1 = mean(wRatios(:, 1));
+  wAvgPerform2 = mean(wRatios(:, 2));
+  wAvgPerform3 = mean(wRatios(:, 3));
+  knnResults(index) = avgPerform;
+  index = index + 1;
 end
+wKnnResults =[wAvgPerform1, wAvgPerform2, wAvgPerform3]
 
 %Plot results
+figure
+plot(1:2:15, knnResults)
+title('Plot of KNN Accuracy per K Value')
+xlabel('K')
+ylabel('Accuracy')
 
-% Experiment with 3 different values of the bandwidth parameter σ
-
+figure
+plot([10, 5, 1], wKnnResults)
+title('Plot of Weighted KNN Accuracy per Sigma Value')
+xlabel('Sigma')
+ylabel('Accuracy')
 
