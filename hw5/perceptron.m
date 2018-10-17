@@ -36,14 +36,15 @@ end
 
 differ = (Y == Y_pred);
 differInd = find(differ == 0);
+ct = 1;
 while ~isempty(differInd)
 
 % Find a sample whose label is predicted innacurately. If multiple, choose randomly
 % Copmute the weight update for the misclassified sample and predict all labels
 % again using the new weights and check accuracy
 
-  sample = randsample(differInd, 1);
-  w = w + eta * X(sample, :) * Y_pred(sample);
+  sel = randsample(differInd, 1);
+  w = w - eta * X(sel, :) * Y_pred(sel);
   for i = 1:10
     curr = sign(X(i, :) * w');
     if curr == 0
@@ -51,9 +52,10 @@ while ~isempty(differInd)
     end
     Y_pred(i) = curr;
   end
-  differ = (Y == Y_pred);
-  differInd = find(differ == 0);
-end
+  differ = (Y == Y_pred)
+  differInd = find(differ == 0)
+  Y_pred
+
 
 % Use the provided plot_points_w.m function to plot the data points and the
 % direction of the weight vector. Positive samples are open circles, negative
@@ -63,5 +65,6 @@ end
 % weights vector w, data matrix X (samples as rows), true labels vector Y,
 % predicted labels Y_pred.
 
-
-
+  plot_points_w;
+  ct = ct+1;
+end
