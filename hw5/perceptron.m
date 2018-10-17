@@ -13,24 +13,47 @@
 % testing) - will visualize whath te method is learning. Learning rate η=0.1.
 % Initialize the weight vector to a vector of random numbers.
 
-
+X = [-1 -4; -3 -1; -3 -2; -2 1; -1 -1; 4 5; 1 3; 4 0; 3 2; 5 3];
+Y = [1 1 1 1 1 -1 -1 -1 -1 -1];
+eta = 0.1;
+w = randn(1, 2);
 
 % Compute the predicted label vector Y_pred by multiplying the weights and features
 % and checking the result. Use the Matlab function sign. If the predicted label is
 % 0, set it 1
 
-
+Y_pred = zeros(1, 10);
+for i = 1:10
+  curr = sign(X(i, :) * w');
+  if curr == 0
+    curr = 1;
+  end
+  Y_pred(i) = curr;
+end
 
 % Compute the accuracy of the current prediction for each training sample.
 % While the accuracy for some sample is not 1, loop as follows:
 
-
+differ = (Y == Y_pred);
+differInd = find(differ == 0);
+while ~isempty(differInd)
 
 % Find a sample whose label is predicted innacurately. If multiple, choose randomly
 % Copmute the weight update for the misclassified sample and predict all labels
 % again using the new weights and check accuracy
 
-
+  sample = randsample(differInd, 1);
+  w = w + eta * X(sample, :) * Y_pred(sample);
+  for i = 1:10
+    curr = sign(X(i, :) * w');
+    if curr == 0
+      curr = 1;
+    end
+    Y_pred(i) = curr;
+  end
+  differ = (Y == Y_pred);
+  differInd = find(differ == 0);
+end
 
 % Use the provided plot_points_w.m function to plot the data points and the
 % direction of the weight vector. Positive samples are open circles, negative
