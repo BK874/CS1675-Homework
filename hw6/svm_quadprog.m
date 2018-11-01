@@ -40,4 +40,17 @@ function [y_pred] = svm_quadprog(X_train, Y_train, X_test, C)
   ub = C * ones(trainSize(1), 1);
 
   % Calculate alphas using the above variables
-  alphas = quadprog(H, f, A, b, Aeq, beq, lb, ub)
+  alphas = quadprog(H, f, A, b, Aeq, beq, lb, ub);
+
+  % Compute the weights using the alphas
+  w = zeros(trainSize(2), 1);
+  for i = 1:trainSize(1)
+    w(i) = alphas(i) * Y_train(i) * X_train(i);
+  end
+
+  % Predict X_test's labels
+  y_predict = zeros(testSize(1), 1);
+  for i = 1:testSize(1)
+    y_predict(i) = X_test(i) * w(i);
+  end
+  
