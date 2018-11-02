@@ -61,7 +61,7 @@ for K = 1:2:15
       trainLabels = foldLabels(:, 2);
       for h = 3:10
 	trainData = cat(1, trainData, folds(:, :, h));
-	trainLabels = cat(1, trainLabels, folds(:, h));
+	trainLabels = cat(1, trainLabels, foldLabels(:, h));
       end
     end
     %Standardize

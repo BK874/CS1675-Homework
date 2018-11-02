@@ -12,6 +12,9 @@
 data = dlmread('pima.data', ',');
 dataSize = size(data);
 
+% Shuffle the data
+data = data(randperm(dataSize(1)), :);
+
 %Define labels and data sans label
 labels = data(1:end-8, end);
 data = data(1:end-8, 1:end-1);
@@ -62,7 +65,7 @@ for c = 1:length(C)
       trainLabels = foldLabels(:, 2);
       for h = 3:10
 	trainData = cat(1, trainData, folds(:, :, h));
-	trainLabels = cat(1, trainLabels, folds(:, h));
+	trainLabels = cat(1, trainLabels, foldLabels(:, h));
       end
     end
     %Standardize
@@ -83,15 +86,22 @@ for c = 1:length(C)
     end
     ratios(f) = count/numLabels(1);
   end
+  % Calculate accuracy
   avgPerform = mean(ratios);
   svmResults(index) = avgPerform;
   index = index + 1;
 end
+% Print results
 svmResults
 
 %Plot results
 figure
-plot([0.0001, 0.001, 0.01, 0.1, 1], svmResults)
+bar(svmResults)
 title('Plot of SVM Accuracy per C Value')
 xlabel('C')
 ylabel('Accuracy')
+text(1:5, svmResults, num2str(svmResults), 'HorizontalAlignment',...
+     'center', 'VerticalAlignment', 'bottom')
+set(gca, 'xtickLabel', [0.0001, 0.001, 0.01, 0.1, 1])
+box off;
+saveas(gcf, 'SVM_C_accuracy.jpg');

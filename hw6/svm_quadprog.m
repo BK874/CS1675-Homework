@@ -20,16 +20,14 @@ function [y_pred] = svm_quadprog(X_train, Y_train, X_test, C)
   testSize = size(X_test);
 
 % H is a matrix containing the pairwise multiplication of the labels of every
-% two samples and the sample with its transpose
+% two samples and the sample with its pair's transpose
   H = zeros(trainSize(1), trainSize(1));
   for i = 1:trainSize(1)
     for j = 1:trainSize(1)
       H(i, j) = Y_train(i) * Y_train(j) * X_train(i, :) * X_train(j, :)';
     end
   end
-  if norm(H-H', inf) > eps
-    false
-  end
+
   % A column vector of -1s, the linear objective term
   f = -ones(trainSize(1), 1);
   % A and b are empty vectors, because we have no corresponding 
@@ -44,7 +42,7 @@ function [y_pred] = svm_quadprog(X_train, Y_train, X_test, C)
 
   % Calculate alphas using the above variables
   alphas = quadprog(H, f, A, b, Aeq, beq, lb, ub);
-pp
+
   % Compute the weights using the alphas
   w = zeros(trainSize(2), 1);
   for i = 1:trainSize(1)
