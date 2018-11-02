@@ -2,8 +2,8 @@
 % CS 1675
 % Homework 6
 
-% Using the Pima Indians Diabetes dataset, test KNN implementation with different
-% values of K.
+% Using the Pima Indians Diabetes dataset, test SVM implementation with different
+% values of C.
 
 % Download the data file, split the data into 10 ~equally-size "folds".
 % For simplicity, use folds of size 76 and drop the remaining 8 instances
@@ -18,6 +18,7 @@ data = data(1:end-8, 1:end-1);
 
 %Divide data and labels into folds: 
 foldLabels = reshape(labels, [76, 10]); %ith column corresponds to ith fold
+foldLabels(foldLabels == 0) = -1; % Correct ground truth labels
 fold1 = data(1:76, :);
 fold2 = data(77:152, :);
 fold3 = data(153:228, :);
@@ -45,9 +46,8 @@ folds = cat(3, folds, fold10);
 svmResults = zeros(5, 1);
 index = 1;
 C = [0.0001, 0.001, 0.01, 0.1, 1];
-for c = 1:5
+for c = 1:length(C)
   ratios = zeros(10, 1);
-  wRatios = zeros(10, 3);
   %For every split of the data, standardize and apply SVM
   for f = 1:10
     if f ~= 1

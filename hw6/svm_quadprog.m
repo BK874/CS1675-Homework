@@ -27,13 +27,16 @@ function [y_pred] = svm_quadprog(X_train, Y_train, X_test, C)
       H(i, j) = Y_train(i) * Y_train(j) * X_train(i, :) * X_train(j, :)';
     end
   end
+  if norm(H-H', inf) > eps
+    false
+  end
   % A column vector of -1s, the linear objective term
   f = -ones(trainSize(1), 1);
   % A and b are empty vectors, because we have no corresponding 
-  A = []
-  b = []
+  A = [];
+  b = [];
   % Aeq and beq is a linear equality constraint where Aeq*x = beq
-  Aeq = Y_train'
+  Aeq = Y_train';
   beq = 0;
   % lb and ub are the upper and lower bounds for x=alpha
   lb = zeros(trainSize(1), 1);
@@ -41,16 +44,14 @@ function [y_pred] = svm_quadprog(X_train, Y_train, X_test, C)
 
   % Calculate alphas using the above variables
   alphas = quadprog(H, f, A, b, Aeq, beq, lb, ub);
-
+pp
   % Compute the weights using the alphas
   w = zeros(trainSize(2), 1);
   for i = 1:trainSize(1)
-    w(i) = alphas(i) * Y_train(i) * X_train(i);
+    w = w + (alphas(i) * Y_train(i) * X_train(i, :)');
   end
 
-  % Predict X_test's labels
-  y_predict = zeros(testSize(1), 1);
-  for i = 1:testSize(1)
-    y_predict(i) = X_test(i) * w(i);
-  end
-  
+  % Predict X_test's labels & correct 0s to 1s
+  result = sign(X_test * w);
+  result(result == 0) = 1;
+  y_pred = result;

@@ -68,13 +68,15 @@ for K = 1:2:15
     trainDataMean = mean(trainData);
     trainDataStd = std(trainData);
     stdTrainData = (trainData - trainDataMean)./trainDataStd;
+    testData = folds(:, :, f);
+    stdTestData = (testData - trainDataMean)./trainDataStd;
     %Apply KNN
-    splitLabels = my_knn(stdTrainData, trainLabels, folds(:, :, f), K);
+    splitLabels = my_knn(stdTrainData, trainLabels, stdTestData, K);
     numLabels = size(splitLabels);
     weightedLabels = zeros(numLabels(1), 3);
-    weightedLabels(:, 1) = weighted_knn(stdTrainData, trainLabels, folds(:, :, f), 10);
-    weightedLabels(:, 2) = weighted_knn(stdTrainData, trainLabels, folds(:, :, f), 5);
-    weightedLabels(:, 3) = weighted_knn(stdTrainData, trainLabels, folds(:, :, f), 1);
+    weightedLabels(:, 1) = weighted_knn(stdTrainData, trainLabels, stdTestData, 0.5);
+    weightedLabels(:, 2) = weighted_knn(stdTrainData, trainLabels, stdTestData, 0.9);
+    weightedLabels(:, 3) = weighted_knn(stdTrainData, trainLabels, stdTestData, 1.3);
     %Compare the predicted labels and the ground truth labels
     count = 0;
     for m = 1:numLabels(1)
@@ -99,6 +101,7 @@ for K = 1:2:15
   index = index + 1;
 end
 wKnnResults =[wAvgPerform1, wAvgPerform2, wAvgPerform3]
+knnResults
 
 %Plot results
 figure
