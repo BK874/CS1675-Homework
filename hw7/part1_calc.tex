@@ -1,0 +1,53 @@
+\documentclass[letterpaper,notitlepage,twoside, fleqn]{article}
+
+% Basic imports, increase margins...
+\usepackage[margin=0.75in]{geometry}
+% Finite State Machine stuff
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata}
+% Format tables nicely
+\usepackage[latin1]{inputenc}
+\usepackage{array}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath,amsthm}
+
+\usepackage{algorithm}          %  float wrapper for algorithms.
+\usepackage{algpseudocode}      % layout for algorithmicx
+\usepackage{float} % http:/ctan.org/pkg/flot - [H] float parameter forces a 'float' (algorithm block) to remain in a location
+
+\renewcommand{\implies}{\Rightarrow} % redefine command "implies"
+\renewcommand{\iff}{\Leftrightarrow} % double arrow
+\newcommand{\maps}{\rightarrow} % define command "map"
+\newcommand{\union}{\cup}
+\newcommand{\intersect}{\cap}
+\newcommand{\N}{\mathbb{N}} % natural number
+\newcommand{\Q}{\mathbb{Q}} % rational number
+\newcommand{\R}{\mathbb{R}} % real number
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand\tab[1][1cm]{\hspace*{#1}} %\tab command
+
+% Add more packages that you use here...
+
+\begin{document}
+\title{Homework 7}
+\author{Brian Knotten}
+\maketitle
+
+\section*{1}
+$x = [1 1]$, $y = [0 0]$, $\eta = 0.3$, $\delta_j = z_j (1 - z_j) \Sigma_k W_{kj} \delta_k$ \\
+Activation = $\frac{1}{1+e^{-a}}$, $a_j = \Sigma_{i=1}^D w^{(1)}_{ji} x_i + w_{j0}^{(1)}$\\
+All weights set to 0.05 \\
+\subsection*{Forward Activations:}
+$z_1 = \frac{1}{1+e^{-a}}$
+\begin{align*}
+-a & = x_0 w^{(1)}_{10} + x_1 w^{(1)}_{11} + x_2 w^{(1)}_{12} \\
+ & = 1 \cdot 0.05 + 1 \cdot 0.05 + 1 \cdot 0.05 \\
+ & = 0.15
+ \end{align*}
+$z_1 = \frac{1}{1+e^{-0.15}} = 0.5374$ \\\\
+$z_2 = \frac{1}{1+e^{-a}}$
+
+\end{document}
