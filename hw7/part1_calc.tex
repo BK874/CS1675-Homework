@@ -32,11 +32,14 @@
 % Add more packages that you use here...
 
 \begin{document}
-\title{Homework 7}
+\title{%
+  Homework 7 \\
+  \large CS1675 \\
+  \large Professor Adriana Kovashka}
 \author{Brian Knotten}
 \maketitle
 
-\section*{1}
+\section*{Part I:}
 $x = [1 1]$, $y = [0 0]$, $\eta = 0.3$, $\delta_j = z_j (1 - z_j) \Sigma_k W_{kj} \delta_k$ \\
 Activation = $\frac{1}{1+e^{-a}}$, $a_j = \Sigma_{i=1}^D w^{(1)}_{ji} x_i + w_{j0}^{(1)}$\\
 All weights set to 0.05 \\
@@ -49,5 +52,56 @@ $z_1 = \frac{1}{1+e^{-a}}$
  \end{align*}
 $z_1 = \frac{1}{1+e^{-0.15}} = 0.5374$ \\\\
 $z_2 = \frac{1}{1+e^{-a}}$
+\begin{align*}
+-a & = x_0 w^{(1)}_{20} + x_1 w^{(1)}_{21} + x_2 w^{(1)}_{22} \\
+ & = 1 \cdot 0.05 + 1 \cdot 0.05 + 1 \cdot 0.05 \\
+ & = 0.15
+ \end{align*}
+ $z_2 = \frac{1}{1+e^{-0.15}} = 0.5374$ \\\\
+ $y_1 = \frac{1}{1+e^{-a}}$
+ \begin{align*}
+-a & = z_0 w^{(2)}_{10} + z_1 w^{(2)}_{11} + z_2 w^{(2)}_{12} \\
+ & = 1 \cdot 0.05 + 0.5374 \cdot 0.05 + 0.5374 \cdot 0.05 \\
+ & = 0.1037
+ \end{align*}
+  $y_1 = \frac{1}{1+e^{-0.1037}} = 0.5259$ \\\\
+  $y_2 = \frac{1}{1+e^{-a}}$
+  \begin{align*}
+-a & = z_0 w^{(2)}_{20} + z_1 w^{(2)}_{21} + z_2 w^{(2)}_{22} \\
+ & = 1 \cdot 0.05 + 0.5374 \cdot 0.05 + 0.5374 \cdot 0.05 \\
+ & = 0.1037
+ \end{align*}
+   $y_2 = \frac{1}{1+e^{-0.1037}} = 0.5259$ 
+   \subsection*{Backpropogation:}
+   $\delta_k = y_k (1-y_k)(y_k - t_k)$, $t_k$ = desired $y_k$ output = 0, $y_k = y_1 = y_2 = 0.5259$ \\
+   $ \frac{\partial E}{\partial w_{kj}^{(2)}} = \delta_k z_j$, $w^{(\tau + 1)} = w^{(\tau)} - \eta \nabla E(w^{(\tau}))$ \\\\
+   $\delta_{y1} = 0.5259 \cdot (1 - 0.5259) \cdot (0.5259 - 0) = 0.1311$ \\
+   $\delta_{y2} = 0.5259 \cdot (1 - 0.5259) \cdot (0.5259 - 0) = 0.1311$ \\
+   $z_0 = 1, z_1 = z_2 = 0.5374, \eta = 0.3, w^{(\tau)} = 0.05$  $\forall w_{kj}$ \\\\
+   $w^{(2)}_{10} = w^{(2)}_{10} - 0.3 \cdot \delta_{y1} \cdot z_0 = 0.05 - 0.3 \cdot 0.1311 \cdot 1 = 0.01067$ \\
+   $w^{(2)}_{11} = w^{(2)}_{11} - 0.3 \cdot \delta_{y1} \cdot z_1 = 0.05 -0.3 \cdot 0.1311 \cdot 0.5374=0.02886$ \\
+   $w^{(2)} _{12} = w^{(2)}_{12} - 0.3 \cdot \delta_{y1} \cdot z_2 = 0.05 -0.3 \cdot 0.1311 \cdot 0.5374=0.02886$\\\\
+   $w^{(2)}_{20} = w^{(2)}_{20} - 0.3 \cdot \delta_{y2} \cdot z_0 = 0.05 - 0.3 \cdot 0.1311 \cdot 1 = 0.01067$ \\
+   $w^{(2)}_{21} = w^{(2)}_{21} - 0.3 \cdot \delta_{y2} \cdot z_1 = 0.05 -0.3 \cdot 0.1311 \cdot 0.5374=0.02886$ \\
+   $w^{(2)}_{22} = w^{(2)}_{22} - 0.3 \cdot \delta_{y2} \cdot z_2 = 0.05 -0.3 \cdot 0.1311 \cdot 0.5374=0.02886$ \\
+   \\
+   $\delta_j = z_j(1-z_j) \Sigma_k w_{kj} \delta_k$, $z_j = z_j$ from activation $(0.5374)$, $w_{kj} =$ weight from before update (0.05), $\frac{\partial E}{\partial w_{ji}^{(1)}} = \delta_j x_i$
+   \begin{align*}
+   \delta_{z1} &= z_1 \cdot (1-z_1) \cdot (w^{(2)}_{11} \cdot \delta_{y1} + w^{(2)}_{21} \cdot \delta_{y2})\\
+   &= 0.5374 \cdot (1 - 0.5374) \cdot (0.05 \cdot 0.1311 + 0.05 \cdot 0.1311) \\
+   &= 0.003259
+   \end{align*}
+  \begin{align*}
+   \delta_{z2} &= z_2 \cdot (1-z_2) \cdot (w^{(2)}_{12} \cdot \delta_{y1} + w^{(2)}_{22} \cdot \delta_{y2})\\
+   &= 0.5374 \cdot (1 - 0.5374) \cdot (0.05 \cdot 0.1311 + 0.05 \cdot 0.1311) \\
+   &= 0.003259
+   \end{align*}
+   $w^{(1)}_{10} = w^{(1)}_{10} - 0.3 \cdot \delta_{z1} \cdot x_0 = 0.05 - 0.3 \cdot 0.003259 \cdot 1 = 0.04902$ \\
+   $w^{(1)}_{11} = w^{(1)}_{11} - 0.3 \cdot \delta_{z1} \cdot x_1 = 0.05 - 0.3 \cdot 0.003259 \cdot 1 = 0.04902$ \\
+   $w^{(1)}_{12} = w^{(1)}_{12} - 0.3 \cdot \delta_{z1} \cdot x_2 = 0.05 - 0.3 \cdot 0.003259 \cdot 1 = 0.04902$ \\\\
+   $w^{(1)}_{20} = w^{(1)}_{20} - 0.3 \cdot \delta_{z2} \cdot x_0 = 0.05 - 0.3 \cdot 0.003259 \cdot 1 = 0.04902$ \\
+   $w^{(1)}_{21} = w^{(1)}_{21} - 0.3 \cdot \delta_{z2} \cdot x_1 = 0.05 - 0.3 \cdot 0.003259 \cdot 1 = 0.04902$ \\
+   $w^{(1)}_{22} = w^{(1)}_{22} - 0.3 \cdot \delta_{z2} \cdot x_2 = 0.05 - 0.3 \cdot 0.003259 \cdot 1 = 0.04902$ \\
 
+   
 \end{document}
