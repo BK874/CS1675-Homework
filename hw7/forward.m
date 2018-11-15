@@ -1,6 +1,6 @@
 % Brian Knotten
 % CS 1675
-% Homework 6
+% Homework 7
 
 % X = NxD feature matrix where N is the number of samples and D is the number of feature dimensions
 % W1 = MxD weight matrix between the first and second layer of the network, where M is the number of hidden neurons
@@ -19,7 +19,10 @@ function [y_pred, Z] = forward(X, W1, W2)
   
   % Create the matrix to store the activation of each sample 
   Z = zeros(N, M);
-
+  y_pred = zeros(N, 1);
+  
+  Z(:, M) = 1;
+  
   % Calculate the activations of the hidden layer
   for i = 1:N % For each sample
     for j = 1:M % For each neuron
@@ -34,5 +37,5 @@ function [y_pred, Z] = forward(X, W1, W2)
   for n = 1:N % For each sample
   % The outputs are the dot product of the hidden layer's output unit
   % activations and the weights between the hidden and output layers
-    y_pred[n] = dot(Z(n, :), W2); 
+    y_pred(n) = dot(Z(n, :), W2); 
   end

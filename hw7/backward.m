@@ -23,7 +23,7 @@ function [W1, W2, error_over_time] = backward(X, y, M, iters, eta)
   W2 = rand(1, M);
 
   % Initialize the error for each iteration
-  error_over_time = zeros(iters, 1);
+  error_over_time = zeros(iters);
   
   
   for iter = 1:iters
@@ -34,8 +34,8 @@ function [W1, W2, error_over_time] = backward(X, y, M, iters, eta)
     [predOutput, Z] = forward(X, W1, W2);
 
     % Compute error at output
-    outputErr = y(sample) - predOutput(sample);
-    error_over_time(iter) = outputErr;
+    outputErr = predOutput(sample) - y(sample);
+    error_over_time(iter) = sqrt(mean((predOutput - y).^2));
 
     % Backpropogate to the hidden layer
     interW2 = zeros(1, M); % To store weights temporarily
@@ -52,12 +52,12 @@ function [W1, W2, error_over_time] = backward(X, y, M, iters, eta)
     % Square the hidden layer's activations, subtract it from 1, and multiply
     % the result by the weights from the hidden layer to the output layer and 
     % the output's error
-    hiddenErr = (1 - (Z(sample, :).^2)) .* W2 * outputErr;
+    hiddenErr = (1 - (Z(sample, :).^2)) .* (W2 * outputErr);
 
     % Backpropogate to the input layer
     % Subtract the learning rate mulitiplied by the transpose of the 
     % hidden layer's error times the current sample
-    interW1 = W1 - eta * hiddenErr' * X(sample, :);
+    interW1 = W1 - (eta * (hiddenErr' * X(sample, :)));
 
     % Update weights
     W1 = interW1;

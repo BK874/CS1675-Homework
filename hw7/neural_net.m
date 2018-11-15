@@ -29,8 +29,8 @@ stdTrainSet = (trainSet - trainMean)./trainStd;
 stdTestSet = (testSet - trainMean)./trainStd;
 
 %Add bias
-%bStdTrainSet = [ones(size(stdTrainSet, 1), 1) stdTrainSet];
-%bStdTestSet = [ones(size(stdTestSet, 1), 1) stdTestSet];
+bStdTrainSet = [ones(size(stdTrainSet, 1), 1) stdTrainSet];
+bStdTestSet = [ones(size(stdTestSet, 1), 1) stdTestSet];
 
 % Set the hidden units, iterations, and learning rate.
 M = 30;
@@ -38,12 +38,12 @@ iters = 1000;
 eta = 0.01;
 
 % Construct and train the network.
-[W1, W2, error_over_time] = backward(stdTrainSet, trainLabels, M, iters, eta);
+[W1, W2, error_over_time] = backward(bStdTrainSet, trainLabels, M, iters, eta);
 
 % Make predictions and compute root mean squared error between the predicted
 % and the ground-truth labels.
-[y_pred, Z] = forward(stdTestSet, W1, W2);
-error = sqrt(mean((y_pred - testLabels').^2));
+[y_pred, Z] = forward(bStdTestSet, W1, W2);
+error = sqrt(mean((y_pred - testLabels).^2))
 
 % Plot
 figure
