@@ -28,13 +28,13 @@ trainStd = std(trainSet);
 stdTrainSet = (trainSet - trainMean)./trainStd;
 stdTestSet = (testSet - trainMean)./trainStd;
 
-%Add bias
+%Add bias at input
 bStdTrainSet = [ones(size(stdTrainSet, 1), 1) stdTrainSet];
 bStdTestSet = [ones(size(stdTestSet, 1), 1) stdTestSet];
 
 % Set the hidden units, iterations, and learning rate.
 M = 30;
-iters = 1000;
+iters = 500;
 eta = 0.01;
 
 % Construct and train the network.

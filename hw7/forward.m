@@ -21,8 +21,6 @@ function [y_pred, Z] = forward(X, W1, W2)
   Z = zeros(N, M);
   y_pred = zeros(N, 1);
   
-  Z(:, M) = 1;
-  
   % Calculate the activations of the hidden layer
   for i = 1:N % For each sample
     for j = 1:M % For each neuron

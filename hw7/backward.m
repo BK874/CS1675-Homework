@@ -19,8 +19,8 @@ function [W1, W2, error_over_time] = backward(X, y, M, iters, eta)
   D = XSize(2);
   
   % Initialize weights
-  W1 = rand(M, D);
-  W2 = rand(1, M);
+  W1 = rand(M, D)/10;
+  W2 = rand(1, M)/10;
 
   % Initialize the error for each iteration
   error_over_time = zeros(iters);
@@ -30,13 +30,13 @@ function [W1, W2, error_over_time] = backward(X, y, M, iters, eta)
     % Pick a random sample
     sample = randi(N);
 
-    % Perform forward propogation 
+    % Perform forward propogation p
     [predOutput, Z] = forward(X, W1, W2);
 
     % Compute error at output
     outputErr = predOutput(sample) - y(sample);
-    error_over_time(iter) = sqrt(mean((predOutput - y).^2));
-
+    error_over_time(iter) = abs(outputErr);
+    
     % Backpropogate to the hidden layer
     interW2 = zeros(1, M); % To store weights temporarily
     interW1 = zeros(M, D);
@@ -50,7 +50,7 @@ function [W1, W2, error_over_time] = backward(X, y, M, iters, eta)
 
     % Compute the error at the hidden layer
     % Square the hidden layer's activations, subtract it from 1, and multiply
-    % the result by the weights from the hidden layer to the output layer and 
+    % the result by the weights from the hidden layer to the output layer and
     % the output's error
     hiddenErr = (1 - (Z(sample, :).^2)) .* (W2 * outputErr);
 
