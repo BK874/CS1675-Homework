@@ -46,7 +46,7 @@ folds = cat(3, folds, fold9);
 folds = cat(3, folds, fold10);
 
 %For the specified iteration values
-adaResults = zeros(5, 1);
+adaResults = zeros(3, 1);
 index = 1;
 iters = [10, 20, 50];
 for it = 1:length(iters)

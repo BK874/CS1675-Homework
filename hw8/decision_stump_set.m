@@ -12,11 +12,10 @@
 %  classified training samples
 % y_pred = Mx1 vector containing the label predictions on the test set
 
-function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
-						       X_test)
+function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train, X_test)
 % Get necessary dimensions
   trainSize = size(X_train);
-  testSizes = size(X_test);
+  testSize = size(X_test);
   N = trainSize(1);
   D = trainSize(2);
   M = testSize(1);
@@ -48,7 +47,7 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
       for n = 1:N
 	% If the feature value is above the threshold, then the classifier labels
 	% the sample as 1
-	if X_train(n, i) >= threshold(i, j)
+	if X_train(n, i) >= thresholds(i, j)
 	  tempLabel = 1;
 	else % It is labelled as -1
 	  tempLabel = -1;
@@ -82,7 +81,7 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
 
   % For each test sample, use the best classifier to predict the proper label
   for m = 1:M
-    if X_test(m, row) >= threshold(row, column)
+    if X_test(m, row) >= thresholds(row, column)
       y_pred(m) = 1 * invert;
     else
       y_pred(m) = -1 * invert;
@@ -91,7 +90,7 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
   % For each train sample, use the best classifier to predict the proper label
   % and check the correctness
   for n = 1:N
-    if X_train(n, row) >= threshold(row, column)
+    if X_train(n, row) >= thresholds(row, column)
       tempTrainLabel = 1 * invert;
       correct_train(n) = tempTrainLabel == y_train(n);
     else
