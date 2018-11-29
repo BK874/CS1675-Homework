@@ -12,6 +12,12 @@
 %  classified training samples
 % y_pred = Mx1 vector containing the label predictions on the test set
 
+% Implement a set of decision stumps in a function
+
+
+
+
+
 function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train, X_test)
 % Get necessary dimensions
   trainSize = size(X_train);
@@ -23,6 +29,12 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
   % Create a Dx10 matrix to store the thresholds of each of the 10 classifiers
   % for each dimension
   thresholds = zeros(D, 10);
+
+  % Each decision stump will operate on a single feature dimension and use a
+  % threshold over that feature dimension to make positive/negative predictions.
+  % It should iterate over all feature dimensions and consider 10 ~equally
+  % spaced thresholds for each feature
+  
   for i = 1:D
     % Get the min and max of each dimension
     dimMax = max(X_train(:, i));
@@ -40,6 +52,10 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
   % >= the threshold is classified as +1, and the second layer is when the same
   % feature value is classified as -1
   wAccur = zeros(D, 10, 2);
+
+  % If the feature value for the dimension is over/under a threshold, it is 
+  % classified as positive; otherwise it is classified as negative
+  
   % For each classifier (10 for each dimension)
   for i = 1:D
     for j = 1:10
@@ -62,9 +78,10 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
   % The weighted accuracy of the inverse (-1 if above the threshold, 1 if below)
   % is just 1 - the accuracy of 1 if above, -1 if below.
   wAccur(:, :, 2) = 1 - wAccur(:, :, 1);
-  
-  % Determine the location of the best classifier by taking the max of the
-  % weighted accuracy matrix
+
+  % Determine the location of the best (highest weighted accuracy
+  % classifier out of all Dx10x2 by taking the max of the weighted accuracy
+  % matrix
   [maxVal, index] = max(wAccur(:));
   [row, column, layer] = ind2sub(size(wAccur), index);
 
@@ -79,7 +96,7 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
     invert = -1;
   end
 
-  % For each test sample, use the best classifier to predict the proper label
+  % For each test sample, use the best classifier to predict the proper label 
   for m = 1:M
     if X_test(m, row) >= thresholds(row, column)
       y_pred(m) = 1 * invert;
@@ -87,7 +104,8 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
       y_pred(m) = -1 * invert;
     end
   end
-  % For each train sample, use the best classifier to predict the proper label
+  
+  % For each training sample, use the best classifier to predict the proper label
   % and check the correctness
   for n = 1:N
     if X_train(n, row) >= thresholds(row, column)
@@ -98,4 +116,3 @@ function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train,
       correct_train(n) = tempTrainLabel == y_train(n);
     end
   end
-    

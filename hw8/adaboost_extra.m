@@ -48,7 +48,7 @@ function [y_pred_final] = adaboost_extra(X_train, y_train, X_test, iters)
   prod = alpha' .* testPred;
   y_pred_final = sign(sum(prod, 2));
   y_pred_final(~y_pred_final) = 1;
-		  
+  
 
 
 
