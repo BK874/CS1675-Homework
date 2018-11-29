@@ -11,7 +11,7 @@
 % y_pred_final = Mx1 vector containing the final labels on the test set using
 %  all iters classifiers
 
-function [y_pred_final] = adaboost(X_train, y_train, X_test, iters)
+function [y_pred_final] = adaboost_extra(X_train, y_train, X_test, iters)
   
   % Get necessary dimensions
   trainSize = size(X_train);
@@ -36,8 +36,7 @@ function [y_pred_final] = adaboost(X_train, y_train, X_test, iters)
     alpha(it) = log((1-epsilon)/epsilon);
     % If alpha is less than 0, discard the current iteration
     if alpha(it) < 0
-      alpha(it) = 0;
-      continue
+      testPred(:, it) = y_pred;
     end
     
     % Update the weights and normalize
