@@ -102,7 +102,7 @@ xlabel('Iter')
 ylabel('Accuracy')
 text(1:3, adaResults, num2str(adaResults), 'HorizontalAlignment',...
      'center', 'VerticalAlignment', 'bottom')
-set(gca, 'xtickLabel', [0.0001, 0.001, 0.01, 0.1, 1])
+set(gca, 'xtickLabel', [10, 20, 50])
 box off;
 saveas(gcf, 'Ada_Iter_accuracy.jpg');
 
