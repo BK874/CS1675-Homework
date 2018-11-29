@@ -11,6 +11,11 @@
 % y_pred_final = Mx1 vector containing the final labels on the test set using
 %  all iters classifiers
 
+% Implement the AdaBoost method defined in Bishop on page 658-659 (Section 14.3)
+% Use decision stumps as the weak classifiers. For extra credit, if a classifier
+% produces an alpha value less than 0, do not terminate the loop and use the
+% inverse of its predictions (inverse, because the alpha is negative). 
+
 function [y_pred_final] = adaboost_extra(X_train, y_train, X_test, iters)
   
   % Get necessary dimensions
@@ -34,9 +39,9 @@ function [y_pred_final] = adaboost_extra(X_train, y_train, X_test, iters)
     incorrect_train = abs(correct_train - 1);
     epsilon = sum(weights .* incorrect_train)/sum(weights);
     alpha(it) = log((1-epsilon)/epsilon);
-    % If alpha is less than 0, discard the current iteration
+    % If alpha is less than 0, di
     if alpha(it) < 0
-      testPred(:, it) = y_pred;
+      testPred(:, it) = -y_pred;
     end
     
     % Update the weights and normalize
@@ -44,7 +49,7 @@ function [y_pred_final] = adaboost_extra(X_train, y_train, X_test, iters)
     weights = weights / sum(weights);
   end
   
-% Make final predictions
+% Make final predictions on the test set using all classifiers
   prod = alpha' .* testPred;
   y_pred_final = sign(sum(prod, 2));
   y_pred_final(~y_pred_final) = 1;
