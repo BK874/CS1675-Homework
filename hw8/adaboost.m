@@ -48,8 +48,8 @@ function [y_pred_final] = adaboost(X_train, y_train, X_test, iters)
   
 % Make final predictions
   prod = alpha .* testPred;
-  finalPred = sign(sum(prod));
-  finalPred(~final) = 1;
+  y_pred_final = sign(sum(prod));
+  y_pred_final(~y_pred_final) = 1;
 		  
 
 
