@@ -1,0 +1,49 @@
+\documentclass[letterpaper,notitlepage,twoside, fleqn]{article}
+
+% Basic imports, increase margins...
+\usepackage[margin=0.75in]{geometry}
+% Finite State Machine stuff
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata}
+% Format tables nicely
+\usepackage[latin1]{inputenc}
+\usepackage{array}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath,amsthm}
+
+\usepackage{algorithm}          %  float wrapper for algorithms.
+\usepackage{algpseudocode}      % layout for algorithmicx
+\usepackage{float} % http:/ctan.org/pkg/flot - [H] float parameter forces a 'float' (algorithm block) to remain in a location
+
+\renewcommand{\implies}{\Rightarrow} % redefine command "implies"
+\renewcommand{\iff}{\Leftrightarrow} % double arrow
+\newcommand{\maps}{\rightarrow} % define command "map"
+\newcommand{\union}{\cup}
+\newcommand{\intersect}{\cap}
+\newcommand{\N}{\mathbb{N}} % natural number
+\newcommand{\Q}{\mathbb{Q}} % rational number
+\newcommand{\R}{\mathbb{R}} % real number
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand\tab[1][1cm]{\hspace*{#1}} %\tab command
+
+% Add more packages that you use here...
+
+\begin{document}
+\section*{Part IV: Problem 1.3}
+We will use Bayes' Theorem to solve both parts of this problem:\\\\
+$p(w|D) = \frac{p(D|w)p(w)}{p(D)}$ and $p(D) = \Sigma_w p(D|w)p(w)$ \\\\
+So, by Bayes' Theorem the probability of selecting an apple $p(a)$ is given by:\\\\
+$p(a) = p(a|r)p(r)+p(a|b)p(b)+p(a|g)p(g) = \frac{3}{10} \cdot 0.2 + \frac{1}{2} \cdot 0.2 + \frac{3}{10} \cdot 0.6 = 0.34$ \\\\
+That is, the probability of selecting an apple $p(a)$ is given by the probability that you choose to select from the red box  $p(r)$ times the probability you select an apple from the red box $p(a|r)$, plus the probability that you choose to select from the blue box $p(b)$ times the probability you select an apple from the blue box $p(a|b)$, plus the probability that you choose to select from the green box $p(g)$ times the probability you select an apple from the green box $p(a|g)$. \\\\
+Also by Bayes' Theorem, the probability of having selected from the green box given that you selected an orange $p(g|o)$ is given by: \\\\
+$p(g|o) = \frac{p(o|g)p(g)}{p(o)}$ \\\\
+Where the probability of selecting an orange in general $p(o)$ is given by: \\\\
+$p(o) = p(o|r)p(r)+p(o|b)p(b)+p(o|g)p(g) = \frac{4}{10} \cdot 0.2 + \frac{1}{2} \cdot 0.2 + \frac{3}{10} \cdot 0.6 = 0.36$ \\\\
+That is, the probability of selecting an orange $p(o)$ is given by the probability that you choose to select from the red box $p(r)$ times the probability you select an orange from the red box $p(o|r)$, plus the probability that you choose to select from the blue box $p(b)$ times the probability you select an orange from the blue box $p(o|b)$, plus the probability that you choose to select from the green box $p(g)$ times the probability you select an orange from the green box $p(o|g)$. \\\\
+So the probability of having selected from the green box given that you selected an orange $p(g|o)$ is: \\\\
+$p(g|o) = \frac{p(o|g)p(g)}{p(o)} = \frac{\frac{3}{10} \cdot 0.6}{0.36} = 0.5$ \\\\
+That is, the probability of having selected from the green box given that you selected an orange $p(g|o)$ is given by the probability you choose to select from the green box $p(g)$ times the probability you select an orange from the green box $p(o|g)$, divided by the probability you choose an orange in general $p(o)$.
+\end{document}
