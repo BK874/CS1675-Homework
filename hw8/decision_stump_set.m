@@ -14,10 +14,6 @@
 
 % Implement a set of decision stumps in a function
 
-
-
-
-
 function [correct_train, y_pred] = decision_stump_set(X_train, y_train, w_train, X_test)
 % Get necessary dimensions
   trainSize = size(X_train);

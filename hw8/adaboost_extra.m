@@ -39,7 +39,11 @@ function [y_pred_final] = adaboost_extra(X_train, y_train, X_test, iters)
     incorrect_train = abs(correct_train - 1);
     epsilon = sum(weights .* incorrect_train)/sum(weights);
     alpha(it) = log((1-epsilon)/epsilon);
-    % If alpha is less than 0, di
+    % If alpha is less than 0, use the inverse of its predictions
+    % This is because alpha is only negative when epsilon is greater than 1/2
+    % i.e. when the current classifier has misclassified more than half the 
+    % samples. Because they are binary, when we invert the <50% accurate 
+    % predictions, they become more than 50% accurate. 
     if alpha(it) < 0
       testPred(:, it) = -y_pred;
     end
