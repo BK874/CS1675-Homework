@@ -45,4 +45,5 @@ function [prob] = naive_solution(A, B, N, M, sent)
       products(i) = products(i) * B(repPerm(i, k), sent(k));
     end
   end
+  
   prob = sum(products);

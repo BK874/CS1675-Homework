@@ -1,0 +1,82 @@
+\documentclass[letterpaper,notitlepage,twoside, fleqn]{article}
+
+% Basic imports, increase margins...
+\usepackage[margin=0.75in]{geometry}
+% Finite State Machine stuff
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata}
+% Format tables nicely
+\usepackage[latin1]{inputenc}
+\usepackage{array}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath,amsthm}
+
+\usepackage{algorithm}          %  float wrapper for algorithms.
+\usepackage{algpseudocode}      % layout for algorithmicx
+\usepackage{float} % http:/ctan.org/pkg/flot - [H] float parameter forces a 'float' (algorithm block) to remain in a location
+
+\renewcommand{\implies}{\Rightarrow} % redefine command "implies"
+\renewcommand{\iff}{\Leftrightarrow} % double arrow
+\newcommand{\maps}{\rightarrow} % define command "map"
+\newcommand{\union}{\cup}
+\newcommand{\intersect}{\cap}
+\newcommand{\N}{\mathbb{N}} % natural number
+\newcommand{\Q}{\mathbb{Q}} % rational number
+\newcommand{\R}{\mathbb{R}} % real number
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand\tab[1][1cm]{\hspace*{#1}} %\tab command
+
+% Add more packages that you use here...
+
+\begin{document}
+\title{%
+  Homework 9 \\
+  \large CS1675 \\
+  \large Professor Adriana Kovashka}
+\author{Brian Knotten}
+\maketitle
+
+\section*{Part I:}
+  \subsection*{1}
+  Want $P(F = 0 | D = 0)$ i.e. the probability that the tank is empty given that the driver observed the gauge showing empty.\\
+  We will use Bayes' Theorem: $P(w|D) = \frac{P(D|w)P(w)}{P(D)}$ and $P(D) = \Sigma_w P(D|w)P(w)$ \\\\
+  So: $P(F = 0 | D = 0) = \frac{P(D = 0|F = 0)P(F = 0)}{P(D = 0)}$. This corresponds to figure 8.54 with $a = B$, $b = F$, $c = G$, and $d = D$. \\\\
+  $P(F = 0)$ is given on page 377 in Bishop as 0.1 \\\\
+  $P(D = 0) = P(D = 0 | G = 0) \cdot P(G = 0) + P(D = 0 | G = 1) \cdot P(G = 1)$ \\
+  $= 0.9 \cdot 0.315 + 0.1 \cdot 0.685$ ($G = 0 and G = 1$ given on page 377) \\
+  $= 0.352$ \\\\
+  $P(D = 0 | F = 0) = \Sigma_{B, G} P(D = 0| G) \cdot P(G|B, F = 0) \cdot P(B)$ \\
+  $= 0.9 \cdot 0.81 + 0.1 \cdot 0.19$  ($P(G = 0|F = 0)$ given by 8.31, $P(G = 1|F)$ given on page 377) \\
+  $= 0.748$ \\\\
+  Combine with $P(F = 0)$ to get $P(F = 0|D = 0) = \frac{0.748 \cdot 0.1}{0.352} = 0.2125$ \\\\
+  Put together with Bayes' Theorem we get: \\
+  $P(F = 0|D = 0, B = 0) = \frac{P(D = 0|F = 0, B = 0)P(F = 0)}{P(D = 0)}$ \\
+  $P(D = 0|F = 0, B = 0) = \Sigma_G P(D = 0|G) \cdot P(G|B = 0, F = 0)$ \\
+  $ = 0.9 \cdot 0.9 + 0.1 \cdot 0.1$ \\
+  $ = 0.81 + 0.01 = 0.82$ \\
+  $P(F = 0) = 0.1$ \\
+  $P(D = 0) = \Sigma_{GF} P(D = 0|G) \cdot P(G|B=0, F) \cdot P(F)$ \\
+  $= (0.9 \cdot 0.9 \cdot 0.1) + (0.1 \cdot 0.1 \cdot 0.1) + (0.9 \cdot 0.8 \cdot 0.9) + (0.1 \cdot 0.2 \cdot 0.9)$ \\\\
+  So, $P(F = 0|D = 0, B = 0) = \frac{0.82 \cdot 0.1}{0.748} = 0.109626$
+  
+  \subsection*{2}
+  Using both versions of Bayes' Theorem we can construct: \\
+  $P(Y|x_1, x_2, ..., x_n) = \frac{P(Y) \Pi_{i=1}^n P(x_i|Y)}{\Sigma_j P(Y=y_j) \Pi_i P(x_i|Y=y_j)}$ 
+    \subsection*{a}
+    Want $P(J = 1 | W = 1, B = 0, C = 0, R = 1)$ \\\\
+    $= \frac{P(J=1) \cdot P(W=1|J=1) \cdot P(B=0|J=1) \cdot P(C=0|J=1) \cdot P(R=1|J=1)}{(P(J=0) \cdot P(W=1|J=0) \cdot P(B=0|J=0) \cdot P(C=0|J=0) \cdot P(R=1|J=0)) + (P(J=1) \cdot P(W=1|J=1) \cdot P(B=0|J=1) \cdot P(C=0|J=1) \cdot P(R=1|J=1))}$ \\\\
+    $= \frac{0.3 \cdot 0.8 \cdot 0.8 \cdot 0.3 \cdot 0.5}{(0.7 \cdot 0.3 \cdot 0.5 \cdot 0.7 \cdot 0.4)+(0.3 \cdot 0.8 \cdot 0.8 \cdot 0.3 \cdot 0.5)}$ \\\\
+    $ = \frac{0.0288}{0.0582}$ \\\\
+    $ = 0.4948$ \\
+    \subsection*{b}
+    Want $P(J = 1 | W = 1, B = 1, C = 1, R = 1)$ \\\\
+    $= \frac{P(J=1) \cdot P(W=1|J=1) \cdot P(B=1|J=1) \cdot P(C=1|J=1) \cdot P(R=1|J=1)}{(P(J=0) \cdot P(W=1|J=0) \cdot P(B=1|J=0) \cdot P(C=1|J=0) \cdot P(R=1|J=0)) + (P(J=1) \cdot P(W=1|J=1) \cdot P(B=1|J=1) \cdot P(C=1|J=1) \cdot P(R=1|J=1))}$ \\\\
+    $=\frac{0.3 \cdot 0.8 \cdot 0.2 \cdot 0.7 \cdot 0.5}{(0.7 \cdot 0.3 \cdot 0.5 \cdot 0.3 \cdot 0.4)+(0.3 \cdot 0.8 \cdot 0.2 \cdot 0.7 \cdot 0.5)}$ \\\\
+    $=\frac{0.0168}{0.0294}$ \\\\
+    $= 0.5714$\\\\
+        
+\end{document}
+
