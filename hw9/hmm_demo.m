@@ -2,6 +2,7 @@
 % CS1675
 % Homework 9
 
+%%%%%%%%%% Below this line taken from hmm_starter.m provided by Professor Kovashka %%%%%%%%%%
 N = 4; % number of states
 M = 7; % words in vocabulary
 
@@ -29,6 +30,8 @@ for i = 1:N
     assert(sum(B(i, :)) == 1);
 end
 
+%%%%%%%%%% Above this line taken from hmm_starter.m provided by Professor Kovashka %%%%%%%%%%
+
 % Select 5 sentences from the given list and compute their probability
 
 sentence1 = [1 5]; % "john ate"
@@ -37,6 +40,8 @@ sentence3 = [3 4 7 1]; % "cat saw the john"
 sentence4 = [1 4 7 4]; % "john saw the saw"
 sentence5 = [1 5 7 3]; % "john ate the cat"
 
+% digits and vpa used to increase floating-point precision
+digits(10)
 vpa(naive_solution(A, B, N, M, sentence1))
 vpa(naive_solution(A, B, N, M, sentence2))
 vpa(naive_solution(A, B, N, M, sentence3))
