@@ -26,7 +26,6 @@ function [prob] = naive_solution(A, B, N, M, sent)
   products = zeros(numPerm, 1);
 
   % Compute the probability of a given state sequence
-
   % For each permutation
   for i = 1:numPerm
     % The probability of going from the start state to the first state
@@ -35,12 +34,15 @@ function [prob] = naive_solution(A, B, N, M, sent)
       % The probability of going from the first state to the second, second
       % to the third, third to fourth, etc.
       for j = 1:numWords-1
-	products(i) = products(i) * A(repPerm(i, j)+1, repPerm(j, k+1)+1);
+	products(i) = products(i) * A(repPerm(i, j)+1, repPerm(i, j+1)+1);
       end
     end
     % The probability of going from the last state to the end state
-    products(i) = products(i) * A(repPerm(i, numWords), 6);
-  end
+    products(i) = products(i) * A(repPerm(i, numWords)+1, 6);
 
-  
-  
+    % Compute the probability of observing the words at each state
+    for k = 1:numWords
+      products(i) = products(i) * B(repPerm(i, k), sent(k));
+    end
+  end
+  prob = sum(products);
