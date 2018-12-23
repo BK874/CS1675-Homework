@@ -1,0 +1,76 @@
+
+<!-- saved from url=(0056)http://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 1 </title>
+</head>
+<body>
+<h2>CS1675: Homework 1 </h2>
+<b>Due:</b> 9/6/2018, 11:59pm 
+<br><br>
+
+This assignment is worth 40 points. 
+<br><br><br>
+
+<u>Part I: Matlab and linear algebra</u> (36 pts)
+<br><br>
+
+Write your code in a script called <font face="courier new">hw1.m</font>, except where noted. Each item is worth 3 points. 
+<br><br>
+
+Since one optimization that Matlab uses is to vectorize code rather than use loops, pay close attention to whether you are allowed to use loops. If this is not specified, you can (but don't have to) use loops. Remember to use the Matlab documentation whenever needed. 
+<br>
+
+<p>Basic operations:</p>
+<ol>
+<li>Generate a 1000000x1 (one million by one) vector of random numbers from a Gaussian (normal) distribution with mean of 0 and standard deviation of 5. Use Matlab's <font face="Courier New">randn</font> function. </li>
+<li>Add 1 to every value in the previous list, by using a loop. To determine how many times to loop, use Matlab's <font face="Courier New">size</font> function. Time this operation and print the number in the code. (Use Matlab's documentation to find out how to time operations.) </li>
+<li>Now add 1 to every value in the original random vector, without using a loop. Time this operation, print the time and write it down. Use a different way to print the number than the method you used above. (See ways to print numbers at the beginning of the Matlab tutorial script.) </li> 
+<li>Plot the exponential function <font face="courier new">2.^x</font>, for non-negative <i>even</i> values of x smaller than 100, without using loops.</li>
+<li>[4 pts] Create two matrices <font face="courier new">A</font> and <font face="courier new">B</font> which, when added together, result in a 10x10 matrix <font face="courier new">C</font> containing all numbers from 1 to 100. In other words, when I add <font face="courier new">A</font> and <font face="courier new">B</font> and convert the result to vector form, I should get a vector containing all numbers from 1 to 100. In code, <font face="courier new">C = A + B; assert(all(C(:) == (1:100)') == 1);</font> Each matrix should only be created with a single command (no loops).</li>
+</ol>
+
+<p>Linear algebra:</p>
+<ol start="6">
+<li>Generate two random matrices <font face="Courier New">A</font> and <font face="Courier New">B</font>, and compute their product by hand, using loops. The size of the first matrix should be [5, 3] and of the second [3, 5]. Check your code by comparing the loop-computed product with the product that you get from Matlab's <font face="Courier New">A*B</font>. You can use loops.</li>
+<li>Show three ways to compute an inner product between two vectors.</li>
+<li>Compute and print the L1-norm and L2-norm for each of the following two vectors: x1 = [0.5 0 1.5] and x2 = [1 1 0]. Verify your answer against the Matlab function <font face="courier new">norm</font>.</li>
+<li>Use Matlab to solve the system of linear equations: 2x + y + 3z = 1; 2x + 6y + 8z = 3; 6x + 8y + 18z = 5.</li>
+</ol>
+
+<p>Functions:</p>
+<ol start="10">
+<li>Write a function <font face="courier new">function [B] = normalize_rows(A)</font> which uses a single command (one line and no loops) to make the sum in each row of the matrix 1. You may need to use <font face="Courier New">repmat</font>, depending on your Matlab version. Note that the sum of the entries in <i>each</i> row should be 1, in the matrix output by your function. </li>
+<li>Create a function <font face="courier new">function [val] = fib(n)</font> that returns the n-th number (n &gt;= 1) in the Fibonacci sequence 1, 1, 2, 3, 5, 8, 13...</li>
+</ol>
+
+<p>Machine learning setup:</p>
+<ol start="12">
+<li>We have the following training set: a red circle, a blue triangle, a blue circle, a green triangle, and a red square. Represent each of these samples as a feature vector, using the same representation scheme/strategy. Write a comment to explain the meaning of each dimension in your representation, i.e. what feature it corresponds to, and what the possible values of that feature are.</li>
+</ol>
+
+<br>
+
+<u>Part II: Short answers</u> (4 pts)
+<br><br>
+
+In a file <font face="courier new">answers.txt</font>, propose two new problems that can be solved with machine learning (ones that we have not discussed in class), and describe how you would go about solving each. For each problem, discuss: 
+<ul>
+<li>What features (x) would you use?</li>
+<li>What would the labels (y) be?</li>
+<li>How would you collect data?</li>
+<li>Why might the problem turn out to be challenging?</li>
+</ul>
+
+
+<br>
+<b>Submission:</b> Please include the following files:
+<ul>
+<li>A Matlab script <font face="courier new">hw1.m</font></li>
+<li>Matlab functions (in corresponding files with the same names): <font face="courier new">normalize_rows</font> and <font face="courier new">fib</font> </li>
+<li>The short answers file <font face="courier new">answers.txt</font> </li>
+</ul>
+
+<br>
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>

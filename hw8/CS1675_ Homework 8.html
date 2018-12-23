@@ -1,0 +1,86 @@
+
+<!-- saved from url=(0057)https://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw8.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 8 </title>
+</head>
+<body>
+<h2>CS1675: Homework 8 </h2>
+<b>Due:</b> 11/29/2018, 11:59pm 
+<br><br>
+
+This assignment is worth 50 points. 
+<br><br>
+
+In this exercise, you will implement a decision stump (a very basic classifier) and a boosting algorithm. You will also complete an exercise to help review basic probability, in preparation for discussing probabilistic graphical models. 
+<br><br><br>
+
+
+<u>Part I: Decision stumps</u> (15 points)
+<br><br>
+Implement a set of decision stumps in a function <font face="courier new">decision_stump_set</font>. 
+<br><br>
+<b>Instructions:</b>
+<ul>
+<li>[5 pts] Each decision stump operates on a single feature dimension and uses a threshold over that feature dimension to make positive/negative predictions. This function should iterate over all feature dimensions, and consider 10 approximately equally spaced thresholds for each feature.</li>
+<li>[3 pts] If the feature value for that dimension of some sample is over/under that threshold (using "over" defines one classifier, and using "under" defines another), we classify it as positive (+1), otherwise as negative (-1). </li>
+<li>[5 pts] After iterating over all combinations, the function should pick the best among these Dx10<font color="red">x2</font> classifiers, i.e. the classifier with highest weighted accuracy <font color="red">(i.e. lowest weighted error)</font>.</li>
+<li>[2 pts] Finally, for simplicity, rather than defining a separate function, we will use this one to output the label on the test samples, using the best combination of feature dimension, threshold, and over/under.</li>
+</ul>
+<b>Inputs:</b>
+<ul>
+<li>an NxD matrix <font face="courier new">X_train</font> (N training samples, D features),</li>
+<li>an Nx1 vector <font face="courier new">y_train</font> of ground-truth labels for the training set,</li>
+<li>an Nx1 vector <font face="courier new">w_train</font> containing the weights for the N training samples, and</li>
+<li>an MxD matrix <font face="courier new">X_test</font> (M test samples, D features).</li>
+</ul>
+<b>Outputs:</b>
+<ul>
+<li>an Nx1 binary vector <font face="courier new">correct_train</font> containing 1 for training samples that are correctly classified by the best decision stump, and 0 for incorrectly classified training samples, and </li>
+<li>an Mx1 vector <font face="courier new">y_pred</font> containing the label predictions on the test set.</li>
+</ul>
+<br>
+
+<u>Part II: AdaBoost</u> (20 points) 
+<br><br>
+In a function <font face="courier new">adaboost</font>, implement the AdaBoost method defined on pages 658-659 in Bishop (Section 14.3). Use decision stumps as your weak classifiers. If some classifier produces an α value less than 0, set the latter to 0 (which effectively discards this classifier) and exit the iteration loop.
+<br><br>
+<b>Instructions:</b>
+<ol>
+<li>[3 pts] Initialize all weights to 1/N. Then iterate:</li>
+<li>[7 pts] Find the best decision stump, and evaluate the quantities ε and α. </li>
+<li>[7 pts] Recompute and normalize the weights. </li>
+<li>[3 pts] Compute the final labels on the test set, using all classifiers (one per iteration). </li>
+</ol>
+<b>Inputs:</b>
+<ul>
+<li><font face="courier new">X_train</font>, <font face="courier new">y_train</font>, <font face="courier new">X_test</font>, and </li>
+<li>a scalar <font face="courier new">iters</font> defining how many iterations of AdaBoost to run (denoted as M in Bishop).</li>
+</ul>
+<b>Outputs:</b> 
+<ul>
+<li>an <font face="courier new" color="red">M</font>x1 vector <font face="courier new">y_pred_final</font>, containing the final labels on the test set, using all <font face="courier new">iters</font> classifiers.</li>
+</ul>
+<br>
+
+<u>Part III: Testing boosting on Pima Indians</u> (10 pts)
+<br><br>
+In a script <font face="courier new">adaboost_demo.m</font>, test the performance of your AdaBoost method on the Pima Indians dataset. Use the train/test split code (10-fold cross-validation) from HW<font color="red">4</font>. Convert all 0 labels to -1. Try employing (10, 20, 50) iterations. Compute and report (in <font face="courier new">report.pdf/docx</font>) the accuracy on the test set, using the final test set labels computed above.
+<br><br><br>
+
+<u>Part IV: Probability review</u> (5 points)
+<br><br>
+In your report file, complete Bishop Exercise 1.3. Show your work.
+<br><br><br>
+
+<b>Submission:</b> Please include the following files:
+<ul>
+<li><font face="courier new">decision_stump_set.m</font></li>
+<li><font face="courier new">adaboost.m</font></li>
+<li><font face="courier new">adaboost_demo.m</font></li>
+<li><font face="courier new">report.pdf/docx</font></li>
+</ul>
+
+<br>
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>

@@ -1,0 +1,86 @@
+
+<!-- saved from url=(0057)https://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 3 </title>
+</head>
+<body>
+<h2>CS1675: Homework 3 </h2>
+<b>Due:</b> 9/27/2018, 11:59pm 
+<br><br>
+
+This assignment is worth 50 points. 
+<br><br>
+In this assignment, you will solve a regression problem in two ways: using the closed-form least-squares solution, and using gradient descent. 
+<br><br><br>
+
+<u>Part I: Linear regression using closed-form solution</u> (10 points) 
+<br><br>
+[5 pts] Write a function <font face="courier new">[w] = lr_solve_closed(X_train, y_train)</font> that computes the closed-form least-squares solution to linear regression, using the Moore-Penrose inverse, as derived in class. Use the Matlab function <font face="courier new">pinv</font>. The body of this function only requires one line of code.
+<br><br>
+<b>Inputs:</b> 
+<ul>
+<li><font face="courier new">X_train</font> is an NxD feature matrix with N samples and D feature dimensions. N is the number of samples in the training set.</li>
+<li><font face="courier new">y_train</font> is an Nx1 vector containing the labels for the training set. The i-th sample in <font face="courier new">y_train</font> should correspond to the i-th row in <font face="courier new">X_train</font>. </li>
+</ul>
+<b>Outputs:</b>
+<ul>
+<li><font face="courier new">w</font> is a Dx1 vector of weights (one per feature dimension).</li>
+</ul>
+[5 pts] Also write a function <font face="courier new">[y_pred] = lr_predict(X_test, w)</font> that uses the weights computed above, to predict a label for a new test sample.
+<br><br>
+<b>Inputs:</b>
+<ul>
+<li><font face="courier new">X_test</font> is an MxD feature matrix with M samples and D feature dimensions. M is the number of samples in the test set.</li>
+<li><font face="courier new">w</font> is a Dx1 vector of weights.</li>
+</ul>
+<b>Outputs:</b>
+<ul>
+<li><font face="courier new">y_pred</font> is the predicted Mx1 vector of labels for the test set.</li>
+</ul>
+<br>
+
+<u>Part II: Linear regression using gradient descent</u>  (20 points)
+<br><br>
+Now implement the gradient descent solution, in a function <font face="courier new">[w] = lr_solve_gd(X_train, y_train, iters, eta)</font>.  
+<br><br>
+<b>Inputs:</b> same as for <font face="courier new">lr_solve_closed</font>, plus:
+<ul>
+<li><font face="courier new">iters</font>, the number of iterations to run gradient descent for, and</li>
+<li><font face="courier new">eta</font>, the learning rate to use in the weight update.</li>
+</ul>
+<b>Outputs:</b> same as for <font face="courier new">lr_solve_closed</font>.
+<br><br>
+<b>Instructions:</b>
+<ol>
+<li>[5 pts] First, initialize the weights in some way (use either random values or all zeros). </li>
+<li>[10 pts] Second, repeat the following <font face="courier new">iters</font> times. In each iteration, first compute the loss function gradient using all training data points. To do this, you need to use <font face="courier new">lr_predict.m</font>.</li>
+<li>[5 pts] Then, adjust the weights in the direction opposite to the gradient.</li>
+</ol>
+<br>
+
+<u>Part III: Testing on the Wine Quality dataset</u> (20 points)
+<br><br>
+You will use the <a href="http://archive.ics.uci.edu/ml/datasets/Wine+Quality">Wine Quality</a> dataset. Use only the red wine data. The goal is to find the quality score of some wine based on its attributes. Include your code in a script <font face="courier new">regression.m</font>. In a file <font face="courier new">report.pdf</font> or <font face="courier new">report.docx</font>, report the L2 error (described below) for the closed-form and gradient descent solutions. 
+<ol>
+<li>[10 pts] First, download the <font face="courier new">winequality-red.csv</font> file, load it in Matlab (e.g. using <font face="courier new">dlmread</font>) and divide the data into a training and test set using approximately 50% for training. Standardize the data, by computing the mean and standard deviation for each feature dimension using the train set only, then subtracting the mean and <font color="red">dividing by the</font> stdev for each feature and each sample. Append a 1 for each feature vector, which will correspond to the bias that our model learns. </li>
+<li>[5 pts] Find the direct closed-form solution and evaluate the accuracy on the test set, by computing the L2 distance between the predicted vector <font face="courier new">y_pred</font> and the ground-truth vector <font face="courier new">y_test</font>. Print the L2 error in your script, with an appropriate description for what is being printed; use <font face="courier new">fprintf</font>. Include it in your report.</li>
+<li>[5 pts] Now compute and evaluate the gradient descent solution. Use 50 iterations, and experiment with the following values for the learning rate: <font face="courier new">10.^(-6:-1)</font>. Evaluate the L2 distance between predicted and ground-truth test labels as above. Print the errors for each learning rate and include them in your report.</li>
+</ol>
+
+
+
+
+<br>
+<b>Submission:</b> Please include the following files:
+<ul>
+<li><font face="courier new">lr_solve_closed.m</font></li>
+<li><font face="courier new">lr_predict.m</font></li>
+<li><font face="courier new">lr_solve_gd.m</font></li>
+<li><font face="courier new">regression.m</font></li>
+<li><font face="courier new">report.pdf/docx</font></li>
+</ul>
+
+<br>
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>

@@ -1,0 +1,72 @@
+
+<!-- saved from url=(0057)https://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw4.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 4 </title>
+</head>
+<body>
+<h2>CS1675: Homework 4 </h2>
+<b>Due:</b> 10/4/2018, 11:59pm 
+<br><br>
+
+This assignment is worth 40 points. 
+<br><br>
+
+In this assignment, you will implement and experiment with KNN classification. 
+<br><br><br>
+
+<u>Part I: K-nearest-neighbors</u> (10 pts)
+<br><br>
+Implement KNN. For each test instance, compute its distance to all training instances, pick the closest K training instances, pick the most common among their labels, and return it as the label for that test instance. Use the Matlab function <font face="courier new">pdist2</font>. 
+<br><br>
+<b>Inputs:</b>
+<ul>
+<li>an NxD feature matrix <font face="courier new">X_train</font> where N is the number of training instances and D is the feature dimension,</li>
+<li>an Nx1 label vector <font face="courier new">y_train</font> for the training instances,</li>
+<li>an MxD feature matrix <font face="courier new">X_test</font> where M is the number of test instances, and</li>
+<li>a scalar <font face="courier new">K</font>.</li>
+</ul>
+<b>Outputs:</b>
+<ul>
+<li>an Mx1 predicted label vector <font face="courier new">y_test</font> for the test instances.</li>
+</ul>
+<br>
+
+<u>Part II: Weighted KNN</u> (10 pts)
+<br><br>
+Implement a Gaussian-weighed KNN classifier using the equation given in class, in a function <font face="courier new">weighted_knn.m</font>. This version uses all neighbors to make a prediction on the test set, but weighs them according to their distance to the test sample.
+<br><br>
+<b>Inputs:</b> The first three are as for <font face="courier new">my_knn.m</font>. The fourth one is:
+<ul>
+<li>a scalar <font face="courier new">sigma</font> denoting the bandwidth of the Gaussian.</li>
+</ul>
+<b>Outputs:</b> same as above
+<br><br><br>
+
+<u>Part II: Testing KNN on the Pima Indians dataset</u> (20 pts)
+<br><br>
+<!--You will use <a href="https://archive.ics.uci.edu/ml/datasets/Pima+Indians+Diabetes">the Pima Indians Diabetes</a> dataset <font face="courier new">pima-indians-diabetes.data</font> and the <font face="courier new">pima-indians-diabetes.names</font> file, both found at the Data Folder yellow link at the top. -->
+You will use the <a href="https://people.cs.pitt.edu/~kovashka/cs1675_fa18/pima.data">Pima Indians Diabetes</a> dataset (originally from the UCI repository, but link is now disabled) to test your KNN implementation and experiment with different values of K. Write your code in a script <font face="courier new">knn_classification.m</font>.
+<ol>
+<li>[5 pts] Download the data file. The last value in each row contains the target label for that row, and the remaining values are the features. Split the data into 10 approximately equally-sized "folds". Your results reported below should be an average of the results when you train on the first 9 folds and test on the remaining 1, then if you train on the folds numbered 1 through 8 and the 10th fold and testing on the 9th fold, etc. For simplicity, you can use folds of size 76 and drop the remaining 8 instances. </li>
+<li>[2 pts] Make sure to normalize the data X by subtracting the mean and dividing by the standard deviation over each dimension, computed using the training data only, as in HW3.</li>
+<li>[5 pts] Apply your KNN function and compute the accuracy over all folds, then average the results. To compute accuracy, check the ratio of test samples whose predicted labels are the same as the ground-truth labels, out of all test samples.</li>
+<li>[5 pts] Experiment with the following values: <font face="courier new">K = 1:2:15</font>. Plot the results (with values of K on the x-axis and accuracy on the y-axis) and include the plot in a file <font face="courier new">report.pdf/docx</font>. </li> 
+<li>[3 pts] So far, we have been weighing neighbors equally. Now we want to experiment with weighing them according to their distance to the test sample of interest. Experiment with 3 different values of the bandwidth parameter <i>σ</i>, create a plot with <i>σ</i> on the x-axis and accuracy on the y-axis, and include the plot in the report file.</li>
+</ol>
+
+
+
+
+<br>
+<b>Submission:</b> Please include the following files:
+<ul>
+<li><font face="courier new">my_knn.m</font></li>
+<li><font face="courier new">weighted_knn.m</font></li>
+<li><font face="courier new">knn_classification.m</font></li>
+<li><font face="courier new">report.pdf/docx</font></li>
+</ul>
+
+
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>

@@ -1,0 +1,103 @@
+
+<!-- saved from url=(0057)https://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw9.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 9 </title>
+</head>
+<body>
+<h2>CS1675: Homework 9 </h2>
+<b>Due:</b> 12/<font color="red">11</font>/2018, 11:59pm 
+<br><br>
+
+This assignment is worth 40 points. 
+<br><br><br>
+
+<u>Part I: Bayes net written exercises</u> (20 points)
+<br><br>
+Enter your responses in a file <font face="courier new">report.pdf/docx</font> .
+<br>
+
+<ol type="1">
+<li>[10 pts] Bishop Exercise 8.11</li>
+<li>[10 pts] In this exercise, we'll do some cross-domain recommendation, where we assume that there is a correlation between a user's taste in music and film. We'll only consider one music genre, namely jazz (which we'll denote by <font face="courier new">J</font>), and four films, "Waking Life" (denoted by <font face="courier new">W</font>), "Borat" (denoted by <font face="courier new">B</font>), "Cinema Paradiso" (denoted by <font face="courier new">C</font>) and "Requiem for a Dream" (denoted by <font face="courier new">R</font>). We'll assume that conditioned on whether the user likes jazz, the movie likes/dislikes are independent. The prior probability of liking jazz is 30%. We've defined the following (combined) conditional probability table, where "=1" means "likes". We are conditioning on the first column.
+<br><br>
+<table border="1">
+<tbody><tr>	<td><font face="courier new">J=1</font></td>	<td><font face="courier new">W=1</font></td>	<td><font face="courier new">B=1</font></td>	<td><font face="courier new">C=1</font></td>	<td><font face="courier new">R=1</font></td>	</tr>
+<tr>	<td>T</td>	<td>80</td>	<td>20</td>	<td>70</td>	<td>50</td>	</tr>
+<tr>	<td>F</td>	<td>30</td>	<td>50</td>	<td>30</td>	<td>40</td>	</tr>
+</tbody></table>
+<br>
+<ol type="a">
+<li>What is the probability the user likes jazz, given that she likes the first and fourth movies but dislikes the second and third? </li>
+<li>How about the probability that the user likes jazz, given that she likes all the movies? </li>
+</ol>
+</li>
+</ol>
+<br>
+
+<u>Part II: HMM naive solution</u> (10 points)
+<br><br>
+
+In the remainder of this assignment, you will implement a basic Hidden Markov model. 
+We'll use the HMM from our in-class part-of-speech tagging example, whose states are <font face="courier new">PropNoun, Noun, Verb, Det</font>. The transition probabilities are the same as in the example shown in class. The observation probabilities are defined as follows, and are defined in the provided file <font face="courier new"><a href="https://people.cs.pitt.edu/~kovashka/cs1675_fa18/hmm_starter.m">hmm_starter.m</a></font>.
+<br><br>
+<table border="1">
+<tbody><tr><td>State/Observation</td> 							<td>john</td> 	<td>mary</td> 	<td>cat</td> 	<td>saw</td> 	<td>ate</td> 	<td>a</td> 		<td>the</td> 	</tr>
+<tr><td><font face="courier new">PropNoun</font></td> 	<td>0.40</td>	<td>0.40</td>	<td>0.10</td>	<td>0.01</td>	<td>0.05</td>	<td>0.03</td>	<td>0.01</td>	</tr>
+<tr><td><font face="courier new">Noun</font></td> 		<td>0.25</td>	<td>0.05</td>	<td>0.30</td>	<td>0.25</td>	<td>0.05</td>	<td>0.05</td>	<td>0.05</td>	</tr>
+<tr><td><font face="courier new">Verb</font></td> 		<td>0.04</td>	<td>0.05</td>	<td>0.04</td>	<td>0.45</td>	<td>0.40</td>	<td>0.01</td>	<td>0.01</td>	</tr>
+<tr><td><font face="courier new">Det</font></td> 		<td>0.01</td>	<td>0.01</td>	<td>0.01</td>	<td>0.01</td>	<td>0.01</td>	<td>0.45</td>	<td>0.50</td>	</tr>
+</tbody></table>
+<br><br>
+
+
+In a function <font face="courier new">naive_solution.m</font>, write code to compute the probability of observing each of the following sentences, using the naive solution. You can map each word to a number that is its index into our vocabulary (the union of the column headers above, except the first one), then a sentence is just a vector of numbers; see Part <font color="red">III</font> for an example. Use the provided <font face="courier new"><a href="https://people.cs.pitt.edu/~kovashka/cs1675_fa18/permn.zip">permn.zip</a></font> to compute combinations with replacement, to get your list of possible state sequences. 
+<br><br>
+<b>Inputs:</b> 
+<ul>
+<li>the transition matrix <font face="courier new">A</font> (from <font face="courier new">hmm_starter.m</font>), </li>
+<li>the observation matrix <font face="courier new">B</font> (from <font face="courier new">hmm_starter.m</font>), </li>
+<li><font face="courier new">N</font>, the number of states,</li>
+<li><font face="courier new">M</font>, the number of words in the vocabulary, and</li>
+<li>a vector of integers <font face="courier new">sent</font> representing the sentence whose observation probability we want to compute.</li>
+</ul>
+<b>Outputs:</b>
+<ul>
+<li><font face="courier new">prob</font>, the probability of observing the input sentence.</li>
+</ul>
+<br>
+
+<!--
+<u>Part III: HMM efficient solution</u> (10 points)
+<br><br>
+In a function <font face="courier new">efficient_solution.m</font> with the same input/output format as above, write code to do the same task, but using the efficient solution discussed in class. If you include the probability of transfering to the end state in the naive solution, make sure you also include it in the efficient solution. Make sure your efficient solution and your naive solution produce the same answer.
+<br><br><br>
+-->
+
+<u>Part III: Testing HMM on part-of-speech tagging</u> (10 points)
+<br><br>
+Finally, in a script <font face="courier new">hmm_demo.m</font>, pick five of the sentences below, and compute their probability of occurrence. In a file <font face="courier new">report.pdf/docx</font>, discuss what you observe about which of them seem more likely than others, and whether what you observe makes sense.
+<ul>
+<li>"john saw the cat." (or using our mapping to numbers, <font face="courier new">sent = [1 4 7 3];</font>)</li>
+<li>"john ate."</li>
+<li>"john saw mary."</li>
+<li>"mary saw john."</li>
+<li>"cat saw the john."</li>
+<li>"john saw the saw."</li>
+<li>"john ate the cat."</li>
+</ul>
+<br>
+
+
+
+<b>Submission:</b> Please include the following files:
+<ul>
+<li><font face="courier new">report.pdf/docx</font></li>
+<li><font face="courier new">naive_solution.m</font></li>
+<!--<li><font face="courier new">efficient_solution.m</font></li>-->
+<li><font face="courier new">hmm_demo.m</font></li>
+</ul>
+
+<br>
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>

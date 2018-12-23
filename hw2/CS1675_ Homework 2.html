@@ -1,0 +1,80 @@
+
+<!-- saved from url=(0056)http://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 2 </title>
+</head>
+<body>
+<h2>CS1675: Homework 2 </h2>
+<b>Due:</b> 9/13/2018, 11:59pm 
+<br><br>
+
+This assignment is worth 50 points. 
+<br><br>
+
+In this assignment, you will implement the K-means algorithm. You will then use it to perform image clustering, to test your implementation. 
+<br><br><br>
+
+<u>Part I: Clustering </u> (25 points)
+<br><br>
+Write a function <font face="courier new">my_kmeans.m</font> to implement a basic version of the K-means algorithm.<br><br>
+<b>Inputs:</b> [5 pts for correct format of input/output] 
+<ul>
+<li>an NxD data matrix <font face="courier new">A</font> where N is the number of samples and D is the dimensionality of your feature representation,</li>
+<li>the number <font face="courier new">K</font> denoting how many clusters to output, and</li>
+<li>a value <font face="courier new">iters</font> saying how many iterations to run for K-means. </li>
+</ul>
+<b>Outputs:</b> 
+<ul>
+<li>an Nx1 output <font face="courier new">ids</font> containing the data membership IDs of each sample (denoted by indices randing from 1 to K, where K is the number of clusters),</li>
+<li>a KxD matrix <font face="courier new">means</font> containing the mean/center for each cluster, and</li>
+<li>a scalar <font face="courier new">ssd</font> measuring the final SSD error of the clustering, i.e. the sum of the squared distances between points and their assigned means, summed over all clusters.</li>
+</ul>
+<b>Instructions:</b>
+<ol>
+<li>[5 pts] First, initialize the cluster means randomly. Get the range of the feature space, separately for each feature dimension (compute max and min and take the difference) and use this to request random numbers in that range. Check the documentation for <font face="courier new">rand</font>. </li>
+<li>[5 pts] Then, iterate over the following two steps. The first step is to compute the memberships for each data sample. Use Matlab's function <font face="courier new">pdist2</font> to efficiently compute distances (check its documentation to see what inputs it expects). Then for each sample, find the min distance and the cluster that gives this min distance.</li>
+<li>[5 pts] The second step is to recompute the cluster means, simply taking the average across samples assigned to that cluster, for each feature dimension.</li>
+<li>[5 pts] Finally, compute the overall SSD error. It helps to keep track of the min distance per sample as you iterate.</li>
+</ol>
+
+<br>
+<u>Part II: Random restarts </u> (5 points)
+<br><br>
+K-means is sensitive to the random choice of initial clusters. To improve your odds of getting a good clustering, implement a wrapper function <font face="courier new">restarts.m</font> to do <font face="courier new">R</font> random restarts and return the clustering with the lowest SSD error.<br><br>
+<b>Inputs:</b> same as for <font face="courier new">my_kmeans.m</font>, plus
+<ul>
+<li>a scalar <font face="courier new">R</font> denoting how many random restarts to perform.</li>
+</ul>
+<b>Outputs:</b> same as for <font face="courier new">my_kmeans.m</font>, but 
+<ul>
+<li><font face="courier new">ssd</font> is the lowest SSD across all random restarts.</li>
+</ul>
+
+<br>
+<u>Part III: Image segmentation using clustering </u> (20 points)
+<br><br>
+You will next test your implementation by applying clustering to segment and recolor an image. Write your code in a script <font face="courier new">segment.m</font> .
+<br>
+<ol>
+<li>[5 pts] Download the following images: <a href="http://people.cs.pitt.edu/~kovashka/cs1675_fa18/panda.jpg"><font face="courier new">panda</font></a>, <a href="http://people.cs.pitt.edu/~kovashka/cs1675_fa18/cardinal.jpg"><font face="courier new">cardinal</font></a>, and <a href="http://people.cs.pitt.edu/~kovashka/cs1675_fa18/pittsburgh.png"><font face="courier new">pittsburgh</font></a>. Load them in Matlab using <font face="courier new">im = imread(filename);</font>. This will return a HxWx3 matrix per image, where H and W denote height and width, and the image has three channels (R, G, B). Convert the image to <font face="courier new">double</font> format. To avoid a long run of your code, downsample the images (reduce their size) e.g. using <font face="courier new">im = imresize(im, [100 100]);</font>. </li>
+<li>[5 pts] To perform segmentation, you need a representation for every image pixel. We will use a three-dimensional feature representation for each pixel, consisting of the R, G and B values of each pixel. Use <font face="courier new">im = reshape(im, H*W, 3);</font> to convert the 3D matrix into a 2D matrix with pixels as the rows and channels (features) as the columns. Use the random restarts function you wrote above, to perform clustering over the pixels of the image.</li>
+<li>[5 pts] Then recolor the pixels of each image according to their cluster membership. In particular, replace each pixel with the average R, G, B values for the cluster to which the pixel belongs (i.e. recolor using the cluster means). Show the recolored image using <font face="courier new">imshow</font>, but convert it to format <font face="courier new">uint8</font> before displaying.</li>
+<li>[5 pts] Experiment with at least five different combinations of settings for <font face="courier new">K, iters, R</font>. Write a brief report (<font face="courier new">report.pdf</font> or <font face="courier new">report.docx</font>) documenting your findings about these, and include the image results inside the document. </li>
+</ol>
+
+
+<br>
+<b>Submission:</b> Please include the following files:
+<ul>
+<li><font face="courier new">my_kmeans.m</font></li>
+<li><font face="courier new">restarts.m</font></li>
+<li><font face="courier new">segment.m</font></li>
+<li><font face="courier new">report.pdf/docx</font></li>
+
+
+</ul>
+
+<br>
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>

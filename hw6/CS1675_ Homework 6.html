@@ -1,0 +1,51 @@
+
+<!-- saved from url=(0057)https://people.cs.pitt.edu/~kovashka/cs1675_fa18/hw6.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS1675: Homework 6</title>
+</head>
+<body>
+<h2>CS1675: Homework 6</h2>
+
+<b>Due:</b> 11/1/2018, 11:59pm
+<br><br>
+This assignment is worth 30 points.
+<br><br>
+In this assignment, you will implement an SVM using the Matlab function <font face="courier new">quadprog</font>. The most useful resource are the handwritten notes and <b>the recitation on Oct. 26</b>.
+<br><br><br>
+<u>Part I: SVM via quadratic programming</u> (20 points)
+<br><br>
+Examine the Matlab function <a href="https://www.mathworks.com/help/optim/ug/quadprog.html"><font face="courier new">quadprog</font></a>. It can be used train an SVM (find the optimal <b>w</b>). Consider the input variables <font face="courier new">H,f,A,b,Aeq,beq,lb,ub</font>. How should you set each of them so that the quadratic program that is solved is the solution to an SVM? How would you compute the weight vector <b>w</b> from the output of <font face="courier new">quadprog</font>?
+<br><br>
+With these answers in hand, your next task is to implement an SVM using a call to <font face="courier new">quadprog</font> with appropriately set input parameters. Write a <font face="courier new">function [y_pred] = svm_quadprog(X_train, Y_train, X_test, C)</font> that "trains" an SVM i.e. obtains the solutions for the alpha weights using <font face="courier new">quadprog</font>, then computes the weight vector <i><b>w</b></i> from these. It should also compute a prediction on the test set, using the test features and the weight vector.
+<br>
+The inputs to this function are:
+<ul>
+<li>an NxD feature matrix <font face="courier new">X_train</font> where N is the number of training instances and D is the feature dimension,</li>
+<li>an Nx1 label vector <font face="courier new">y_train</font> for the training instances,</li>
+<li>an MxD feature matrix <font face="courier new">X_test</font> where M is the number of test instances, and</li>
+<li>a scalar <font face="courier new">C</font>, denoting the misclassification cost in an SVM.</li>
+</ul>
+The output is:
+<ul>
+<li>an Mx1 predicted label vector <font face="courier new">y_pred</font> for the test instances.</li>
+</ul>
+<br>
+
+<u>Part II: Testing your SVM</u> (10 points)
+<br><br>
+Now test your SVM on the Pima Indians dataset from HW4. Reuse your KNN test script, but instead of testing different values of K or the bandwidth, test different values of C (e.g. 0.0001, 0.001, 0.01, 0.1, and 1). Name your adapted script <font face="courier new">svm_classification.m</font>. Plot the performance of your SVM with the values of C on the x-axis, and the corresponding accuracies on the y-axis. Include the figure in a report file.
+<br><br>
+Important: Make sure to convert the ground-truth labels of 0 to -1. Then your predicted values should also be only -1 or 1. 
+<br><br><br>
+
+<b>Submission:</b> Please include the following files:
+<ul>
+<li><font face="courier new">svm_quadprog.m</font></li>
+<li><font face="courier new">svm_classification.m</font></li>
+<li><font face="courier new">report.pdf</font></li>
+</ul>
+<br>
+
+
+
+<div id="UMS_TOOLTIP" style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;"></div></body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>
